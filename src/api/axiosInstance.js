@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://server-sushi-lms.onrender.com",
+  baseURL: "https://server-sushi-j6uv.onrender.com",
 });
 
 axiosInstance.interceptors.request.use(
