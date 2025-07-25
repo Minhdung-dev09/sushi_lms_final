@@ -9,6 +9,7 @@ import {
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { signInFormControls, signUpFormControls } from "@/config";
 import { AuthContext } from "@/context/auth-context";
+import banner from "../../../public/banners-img.jpg";
 import { GraduationCap } from "lucide-react";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
@@ -51,7 +52,7 @@ function AuthPage() {
     <div className="relative flex flex-col min-h-screen">
       <div className="absolute inset-0 w-full h-full -z-10">
         <img
-          src="/banners-img.jpg"
+          src={banner}
           alt="background"
           className="object-cover w-full h-full"
         />
