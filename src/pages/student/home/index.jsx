@@ -12,16 +12,19 @@ import { Carousel } from "antd";
 import "antd/dist/reset.css";
 import { StarFilled } from "@ant-design/icons";
 import Footer from "@/components/ui/footer";
+import LoadingSpinner from "@/components/ui/loading-spinner";
 
 function StudentHomePage() {
-  const { studentViewCoursesList, setStudentViewCoursesList } =
+  const { studentViewCoursesList, setStudentViewCoursesList, loadingState, setLoadingState } =
     useContext(StudentContext);
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function fetchAllStudentViewCourses() {
+    setLoadingState(true);
     const response = await fetchStudentViewCourseListService();
     if (response?.success) setStudentViewCoursesList(response?.data);
+    setLoadingState(false);
   }
 
   async function handleCourseNavigate(getCurrentCourseId) {
@@ -42,6 +45,10 @@ function StudentHomePage() {
   useEffect(() => {
     fetchAllStudentViewCourses();
   }, []);
+
+  if (loadingState) {
+    return <LoadingSpinner />;
+  }
 
   // Dữ liệu mẫu cho đánh giá học viên (thêm số sao)
   const studentReviews = [
