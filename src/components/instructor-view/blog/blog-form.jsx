@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import RichTextEditor from "@/components/ui/rickEditor";
 import {
   Select,
   SelectContent,
@@ -126,17 +127,13 @@ function BlogForm({ blog, onSubmit, onClose }) {
             </div>
 
             {/* Nội dung */}
-            <div className="space-y-2">
-              <Label htmlFor="content">Nội dung bài viết *</Label>
-              <Textarea
-                id="content"
-                value={formData.content}
-                onChange={(e) => handleInputChange("content", e.target.value)}
-                placeholder="Nhập nội dung bài viết..."
-                rows={10}
-                required
-              />
-            </div>
+            <RichTextEditor
+              value={formData.content}
+              onChange={(value) => handleInputChange("content", value)}
+              label="Nội dung bài viết"
+              placeholder="Nhập nội dung bài viết..."
+              required={true}
+            />
 
             {/* Danh mục và Tác giả */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

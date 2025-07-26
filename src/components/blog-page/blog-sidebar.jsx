@@ -12,22 +12,6 @@ const categories = [
   "Công nghệ",
   "Ngôn ngữ",
 ];
-const tags = [
-  "học trực tuyến",
-  "giáo dục",
-  "công nghệ",
-  "học tập",
-  "kỹ năng",
-  "hiệu quả",
-  "kỹ năng mềm",
-  "phát triển",
-  "nghề nghiệp",
-  "thói quen",
-  "rèn luyện",
-  "AI",
-  "ngoại ngữ",
-  "phương pháp",
-];
 
 function BlogSidebar({
   showSidebar,
@@ -105,36 +89,6 @@ function BlogSidebar({
               </button>
             ))}
           </div>
-        </Card>
-
-        {/* Lọc theo tags */}
-        <Card className="p-4">
-          <h3 className="font-semibold mb-3 flex items-center gap-2">
-            <Tag className="w-4 h-4" />
-            Tags
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <Badge
-                key={tag}
-                variant={selectedTags.includes(tag) ? "default" : "outline"}
-                className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                onClick={() => handleTagToggle(tag)}
-              >
-                {tag}
-              </Badge>
-            ))}
-          </div>
-          {selectedTags.length > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSelectedTags([])}
-              className="mt-3 text-xs"
-            >
-              Xóa tất cả tags
-            </Button>
-          )}
         </Card>
 
         {/* Thống kê */}

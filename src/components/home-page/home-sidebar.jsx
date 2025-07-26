@@ -71,9 +71,21 @@ function HomeSidebar({ onPostClick }) {
           </h3>
           <div className="bg-gray-100 rounded-lg p-4 min-h-[250px] flex items-center justify-center">
             <div className="text-center text-gray-500">
-              <div className="text-2xl mb-2">📢</div>
-              <p className="text-sm">Google AdSense</p>
-              <p className="text-xs mt-1">300x250</p>
+              <img
+                src="/ads.png"
+                className="w-60 h-30 mb-14"
+                alt="Quảng cáo"
+              />
+              <p className="text-sm">
+                <a
+                  href="https://sushilaw.io.vn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-red-500 hover:text-primary/80 font-medium transition-colors"
+                >
+                  Sushilaw.io.vn - Pháp lý cho mọi người
+                </a>
+              </p>
             </div>
           </div>
         </Card>

@@ -1,4 +1,4 @@
-import banner from "../../../../public/banners-img.jpg";
+// Remove the import and use the image directly with root path
 import { Button } from "@/components/ui/button";
 import { useContext, useEffect } from "react";
 import { StudentContext } from "@/context/student-context";
@@ -100,7 +100,9 @@ function StudentHomePage() {
     <div className="min-h-screen bg-white">
       <section className="flex flex-col lg:flex-row items-center justify-between py-8 px-4 lg:px-8">
         <div className="lg:w-1/2 lg:pr-12">
-          <h1 className="text-4xl font-bold mb-4">Học tập hiệu quả cho bạn</h1>
+          <h1 className="text-4xl font-bold mb-4">
+            &quot;Học Tập Hiệu Quả – Phát Triển Bứt Phá&quot;
+          </h1>
           <p className="text-xl">
             Kỹ năng cho hiện tại và tương lai của bạn. Bắt đầu ngay với chúng
             tôi
@@ -108,7 +110,7 @@ function StudentHomePage() {
         </div>
         <div className="lg:w-full mb-8 lg:mb-0">
           <img
-            src={banner}
+            src="/banners-img.jpg"
             width={500}
             height={300}
             className="w-full h-auto rounded-lg shadow-lg"
