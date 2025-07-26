@@ -1,8 +1,9 @@
-import { Skeleton } from "@/components/ui/skeleton";
+
 import { initialSignInFormData, initialSignUpFormData } from "@/config";
 import { checkAuthService, loginService, registerService } from "@/services";
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import Loading from "@/components/loadings";
 
 export const AuthContext = createContext(null);
 
@@ -98,7 +99,7 @@ export default function AuthProvider({ children }) {
         resetCredentials,
       }}
     >
-      {loading ? <Skeleton /> : children}
+      {loading ? <Loading /> : children}
     </AuthContext.Provider>
   );
 }
