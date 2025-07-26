@@ -18,6 +18,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteCourseByIdService } from "@/services";
 import PropTypes from "prop-types";
+import { toast } from "@/hooks/use-toast";
 
 function InstructorCourses({ listOfCourses }) {
   const navigate = useNavigate();
@@ -31,9 +32,18 @@ function InstructorCourses({ listOfCourses }) {
     if (window.confirm("Bạn có chắc chắn muốn xóa khóa học này?")) {
       const response = await deleteCourseByIdService(courseId);
       if (response?.success) {
+        toast({
+          title: "Xóa khóa học thành công!",
+          description: "Khóa học đã được xóa khỏi hệ thống.",
+          status: "success",
+        });
         window.location.reload();
       } else {
-        alert("Xóa khóa học thất bại!");
+        toast({
+          title: "Xóa khóa học thất bại!",
+          description: response?.message || "Vui lòng thử lại.",
+          status: "error",
+        });
       }
     }
   };

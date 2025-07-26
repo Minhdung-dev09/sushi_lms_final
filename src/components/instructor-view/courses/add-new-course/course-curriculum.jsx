@@ -14,6 +14,7 @@ import {
 } from "@/services";
 import { Upload } from "lucide-react";
 import { useContext, useRef } from "react";
+import { toast } from "@/hooks/use-toast";
 
 function CourseCurriculum() {
   const {
@@ -70,6 +71,11 @@ function CourseCurriculum() {
           setMediaUploadProgressPercentage
         );
         if (response.success) {
+          toast({
+            title: "Upload video thành công!",
+            description: "Video đã được tải lên thành công.",
+            status: "success",
+          });
           let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
           cpyCourseCurriculumFormData[currentIndex] = {
             ...cpyCourseCurriculumFormData[currentIndex],
@@ -80,6 +86,11 @@ function CourseCurriculum() {
           setMediaUploadProgress(false);
         }
       } catch (error) {
+        toast({
+          title: "Upload video thất bại!",
+          description: "Có lỗi xảy ra khi tải video lên.",
+          status: "error",
+        });
         console.log(error);
       }
     }
@@ -96,6 +107,11 @@ function CourseCurriculum() {
     );
 
     if (deleteCurrentMediaResponse?.success) {
+      toast({
+        title: "Xóa video thành công!",
+        description: "Video cũ đã được xóa.",
+        status: "success",
+      });
       cpyCourseCurriculumFormData[currentIndex] = {
         ...cpyCourseCurriculumFormData[currentIndex],
         videoUrl: "",
@@ -103,6 +119,12 @@ function CourseCurriculum() {
       };
 
       setCourseCurriculumFormData(cpyCourseCurriculumFormData);
+    } else {
+      toast({
+        title: "Xóa video thất bại!",
+        description: "Không thể xóa video cũ.",
+        status: "error",
+      });
     }
   }
 

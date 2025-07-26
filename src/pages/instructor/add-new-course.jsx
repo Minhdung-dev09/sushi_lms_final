@@ -4,6 +4,7 @@ import CourseSettings from "@/components/instructor-view/courses/add-new-course/
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "@/hooks/use-toast";
 import {
   courseCurriculumInitialFormData,
   courseLandingInitialFormData,
@@ -88,10 +89,21 @@ function AddNewCoursePage() {
         : await addNewCourseService(courseFinalFormData);
 
     if (response?.success) {
+      toast({
+        title: currentEditedCourseId !== null ? "Cập nhật khóa học thành công!" : "Tạo khóa học thành công!",
+        description: currentEditedCourseId !== null ? "Khóa học đã được cập nhật." : "Khóa học mới đã được tạo.",
+        status: "success",
+      });
       setCourseLandingFormData(courseLandingInitialFormData);
       setCourseCurriculumFormData(courseCurriculumInitialFormData);
       navigate(-1);
       setCurrentEditedCourseId(null);
+    } else {
+      toast({
+        title: currentEditedCourseId !== null ? "Cập nhật khóa học thất bại!" : "Tạo khóa học thất bại!",
+        description: response?.message || "Vui lòng thử lại.",
+        status: "error",
+      });
     }
 
     console.log(courseFinalFormData, "courseFinalFormData");
