@@ -83,10 +83,6 @@ function StudentBlogDetailPage() {
               <Eye className="w-4 h-4" />
               <span>{post.viewCount || 0} lượt xem</span>
             </div>
-            <div className="flex items-center gap-1">
-              <Heart className="w-4 h-4" />
-              <span>{post.likeCount || 0} lượt thích</span>
-            </div>
           </div>
 
           {/* Category and Tags */}

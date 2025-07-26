@@ -10,7 +10,7 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { signInFormControls, signUpFormControls } from "@/config";
 import { AuthContext } from "@/context/auth-context";
 import { GraduationCap } from "lucide-react";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function AuthPage() {
@@ -22,7 +22,13 @@ function AuthPage() {
     setSignUpFormData,
     handleRegisterUser,
     handleLoginUser,
+    setOnRegisterSuccess,
   } = useContext(AuthContext);
+
+  // Set callback to switch to signin tab after successful registration
+  useEffect(() => {
+    setOnRegisterSuccess(() => () => setActiveTab("signin"));
+  }, [setOnRegisterSuccess]);
 
   function handleTabChange(value) {
     setActiveTab(value);

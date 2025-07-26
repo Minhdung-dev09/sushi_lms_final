@@ -1,4 +1,3 @@
-
 import { initialSignInFormData, initialSignUpFormData } from "@/config";
 import { checkAuthService, loginService, registerService } from "@/services";
 import { createContext, useEffect, useState } from "react";
@@ -16,6 +15,7 @@ export default function AuthProvider({ children }) {
     user: null,
   });
   const [loading, setLoading] = useState(true);
+  const [onRegisterSuccess, setOnRegisterSuccess] = useState(null);
 
   async function handleRegisterUser(event) {
     event.preventDefault();
@@ -26,6 +26,12 @@ export default function AuthProvider({ children }) {
         description: "Bạn có thể đăng nhập ngay bây giờ.",
         status: "success",
       });
+      // Reset form data
+      setSignUpFormData(initialSignUpFormData);
+      // Call callback to switch to signin tab
+      if (onRegisterSuccess) {
+        onRegisterSuccess();
+      }
     } else {
       toast({
         title: "Đăng ký thất bại!",
@@ -121,6 +127,7 @@ export default function AuthProvider({ children }) {
         handleLoginUser,
         auth,
         resetCredentials,
+        setOnRegisterSuccess,
       }}
     >
       {loading ? <Loading /> : children}

@@ -26,7 +26,7 @@ function StudentCoursesPage() {
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold mb-8">My Courses</h1>
+      <h1 className="text-3xl font-bold mb-8">Khóa học của tôi</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {studentBoughtCoursesList && studentBoughtCoursesList.length > 0 ? (
           studentBoughtCoursesList.map((course) => (
@@ -50,13 +50,13 @@ function StudentCoursesPage() {
                   className="flex-1"
                 >
                   <Watch className="mr-2 h-4 w-4" />
-                  Start Watching
+                  Tiếp tục học
                 </Button>
               </CardFooter>
             </Card>
           ))
         ) : (
-          <h1 className="text-3xl font-bold">No Courses found</h1>
+          <h1 className="text-3xl font-bold">Không có khóa học nào</h1>
         )}
       </div>
     </div>
