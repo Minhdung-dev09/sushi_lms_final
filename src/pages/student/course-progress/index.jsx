@@ -23,6 +23,7 @@ import { Check, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "@/hooks/use-toast";
 
 function StudentViewCourseProgressPage() {
   const navigate = useNavigate();
@@ -86,7 +87,18 @@ function StudentViewCourseProgressPage() {
       );
 
       if (response?.success) {
+        toast({
+          title: "Cập nhật tiến độ thành công!",
+          description: "Bài giảng đã được đánh dấu là đã xem.",
+          status: "success",
+        });
         fetchCurrentCourseProgress();
+      } else {
+        toast({
+          title: "Cập nhật tiến độ thất bại!",
+          description: "Không thể cập nhật tiến độ bài giảng.",
+          status: "error",
+        });
       }
     }
   }
@@ -98,10 +110,21 @@ function StudentViewCourseProgressPage() {
     );
 
     if (response?.success) {
+      toast({
+        title: "Reset tiến độ thành công!",
+        description: "Tiến độ khóa học đã được reset về 0%.",
+        status: "success",
+      });
       setCurrentLecture(null);
       setShowConfetti(false);
       setShowCourseCompleteDialog(false);
       fetchCurrentCourseProgress();
+    } else {
+      toast({
+        title: "Reset tiến độ thất bại!",
+        description: "Không thể reset tiến độ khóa học.",
+        status: "error",
+      });
     }
   }
 
