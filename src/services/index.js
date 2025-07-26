@@ -171,3 +171,76 @@ export async function deleteCourseByIdService(id) {
   );
   return data;
 }
+
+// Blog management services
+export async function fetchInstructorBlogListService() {
+  const { data } = await axiosInstance.get(`/instructor/blog/get`);
+  return data;
+}
+
+export async function addNewBlogService(formData) {
+  const { data } = await axiosInstance.post(`/instructor/blog/add`, formData);
+  return data;
+}
+
+export async function fetchInstructorBlogDetailsService(id) {
+  const { data } = await axiosInstance.get(
+    `/instructor/blog/get/details/${id}`
+  );
+  return data;
+}
+
+export async function updateBlogByIdService(id, formData) {
+  const { data } = await axiosInstance.put(
+    `/instructor/blog/update/${id}`,
+    formData
+  );
+  return data;
+}
+
+export async function deleteBlogByIdService(id) {
+  const { data } = await axiosInstance.delete(`/instructor/blog/delete/${id}`);
+  return data;
+}
+
+// Public blog services for students
+export async function fetchPublicBlogListService(query) {
+  const { data } = await axiosInstance.get(`/student/blog/get?${query}`);
+  return data;
+}
+
+export async function fetchPublicBlogDetailsService(blogId) {
+  const { data } = await axiosInstance.get(
+    `/student/blog/get/details/${blogId}`
+  );
+  return data;
+}
+
+export async function fetchBlogsByCategoryService(category) {
+  const { data } = await axiosInstance.get(
+    `/student/blog/category/${category}`
+  );
+  return data;
+}
+
+export async function fetchBlogsByTagService(tag) {
+  const { data } = await axiosInstance.get(`/student/blog/tag/${tag}`);
+  return data;
+}
+
+export async function fetchPopularBlogsService() {
+  const { data } = await axiosInstance.get(`/student/blog/popular`);
+  return data;
+}
+
+export async function fetchRecentBlogsService() {
+  const { data } = await axiosInstance.get(`/student/blog/recent`);
+  return data;
+}
+
+export async function searchBlogsService(searchTerm) {
+  const { data } = await axiosInstance.get(
+    `/student/blog/search?q=${searchTerm}`
+  );
+  return data;
+}
