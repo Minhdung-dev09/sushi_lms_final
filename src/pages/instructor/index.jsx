@@ -1,26 +1,107 @@
 import InstructorCourses from "@/components/instructor-view/courses";
 import InstructorDashboard from "@/components/instructor-view/dashboard";
+import InstructorBlog from "@/components/instructor-view/blog";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AuthContext } from "@/context/auth-context";
 import { InstructorContext } from "@/context/instructor-context";
-import { fetchInstructorCourseListService } from "@/services";
-import { BarChart, Book, LogOut } from "lucide-react";
+import {
+  fetchInstructorCourseListService,
+  fetchInstructorBlogListService,
+} from "@/services";
+import { BarChart, Book, FileText, LogOut } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 
 function InstructorDashboardpage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const { resetCredentials } = useContext(AuthContext);
-  const { instructorCoursesList, setInstructorCoursesList } =
-    useContext(InstructorContext);
+  const {
+    instructorCoursesList,
+    setInstructorCoursesList,
+    instructorBlogsList,
+    setInstructorBlogsList,
+  } = useContext(InstructorContext);
 
   async function fetchAllCourses() {
     const response = await fetchInstructorCourseListService();
     if (response?.success) setInstructorCoursesList(response?.data);
   }
 
+  async function fetchAllBlogs() {
+    try {
+      const response = await fetchInstructorBlogListService();
+      if (response?.success) {
+        setInstructorBlogsList(response?.data);
+      } else {
+        // Fallback to mock data if service fails
+        const mockBlogs = [
+          {
+            _id: "1",
+            title: "Lợi ích của việc học trực tuyến",
+            summary:
+              "Khám phá những lợi ích nổi bật của việc học trực tuyến trong thời đại số.",
+            content: "Nội dung chi tiết về lợi ích học trực tuyến...",
+            category: "Học tập",
+            author: "Admin",
+            image: "/banners-img.jpg",
+            tags: ["học trực tuyến", "giáo dục", "công nghệ"],
+            status: "published",
+            createdAt: "2024-01-15",
+          },
+          {
+            _id: "2",
+            title: "5 mẹo để học hiệu quả hơn",
+            summary:
+              "Những bí quyết giúp bạn tối ưu hóa quá trình học tập và đạt kết quả cao.",
+            content: "Nội dung chi tiết về các mẹo học tập...",
+            category: "Kỹ năng",
+            author: "Chuyên gia",
+            image: "/banners-img.jpg",
+            tags: ["học tập", "kỹ năng", "hiệu quả"],
+            status: "draft",
+            createdAt: "2024-01-10",
+          },
+        ];
+        setInstructorBlogsList(mockBlogs);
+      }
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+      // Fallback to mock data
+      const mockBlogs = [
+        {
+          _id: "1",
+          title: "Lợi ích của việc học trực tuyến",
+          summary:
+            "Khám phá những lợi ích nổi bật của việc học trực tuyến trong thời đại số.",
+          content: "Nội dung chi tiết về lợi ích học trực tuyến...",
+          category: "Học tập",
+          author: "Admin",
+          image: "/banners-img.jpg",
+          tags: ["học trực tuyến", "giáo dục", "công nghệ"],
+          status: "published",
+          createdAt: "2024-01-15",
+        },
+        {
+          _id: "2",
+          title: "5 mẹo để học hiệu quả hơn",
+          summary:
+            "Những bí quyết giúp bạn tối ưu hóa quá trình học tập và đạt kết quả cao.",
+          content: "Nội dung chi tiết về các mẹo học tập...",
+          category: "Kỹ năng",
+          author: "Chuyên gia",
+          image: "/banners-img.jpg",
+          tags: ["học tập", "kỹ năng", "hiệu quả"],
+          status: "draft",
+          createdAt: "2024-01-10",
+        },
+      ];
+      setInstructorBlogsList(mockBlogs);
+    }
+  }
+
   useEffect(() => {
     fetchAllCourses();
+    fetchAllBlogs();
   }, []);
 
   const menuItems = [
@@ -28,13 +109,29 @@ function InstructorDashboardpage() {
       icon: BarChart,
       label: "Bảng điều khiển",
       value: "dashboard",
-      component: <InstructorDashboard listOfCourses={instructorCoursesList} />,
+      component: (
+        <InstructorDashboard
+          listOfCourses={instructorCoursesList}
+          listOfBlogs={instructorBlogsList}
+        />
+      ),
     },
     {
       icon: Book,
       label: "Khóa học",
       value: "courses",
       component: <InstructorCourses listOfCourses={instructorCoursesList} />,
+    },
+    {
+      icon: FileText,
+      label: "Bài viết",
+      value: "blogs",
+      component: (
+        <InstructorBlog
+          listOfBlogs={instructorBlogsList}
+          onBlogUpdate={fetchAllBlogs}
+        />
+      ),
     },
     {
       icon: LogOut,

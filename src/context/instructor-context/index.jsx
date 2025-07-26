@@ -20,6 +20,10 @@ export default function InstructorProvider({ children }) {
   const [instructorCoursesList, setInstructorCoursesList] = useState([]);
   const [currentEditedCourseId, setCurrentEditedCourseId] = useState(null);
 
+  // Blog management state
+  const [instructorBlogsList, setInstructorBlogsList] = useState([]);
+  const [currentEditedBlogId, setCurrentEditedBlogId] = useState(null);
+
   return (
     <InstructorContext.Provider
       value={{
@@ -35,6 +39,10 @@ export default function InstructorProvider({ children }) {
         setInstructorCoursesList,
         currentEditedCourseId,
         setCurrentEditedCourseId,
+        instructorBlogsList,
+        setInstructorBlogsList,
+        currentEditedBlogId,
+        setCurrentEditedBlogId,
       }}
     >
       {children}

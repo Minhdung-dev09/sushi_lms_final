@@ -7,10 +7,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DollarSign, Users } from "lucide-react";
+import { DollarSign, Users, FileText, TrendingUp } from "lucide-react";
 import PropTypes from "prop-types";
 
-function InstructorDashboard({ listOfCourses }) {
+function InstructorDashboard({ listOfCourses, listOfBlogs }) {
   function calculateTotalStudentsAndProfit() {
     const { totalStudents, totalProfit, studentList } = listOfCourses.reduce(
       (acc, course) => {
@@ -44,6 +44,15 @@ function InstructorDashboard({ listOfCourses }) {
 
   console.log(calculateTotalStudentsAndProfit());
 
+  // Calculate blog statistics
+  const blogStats = {
+    totalBlogs: listOfBlogs?.length || 0,
+    publishedBlogs:
+      listOfBlogs?.filter((blog) => blog.status === "published").length || 0,
+    draftBlogs:
+      listOfBlogs?.filter((blog) => blog.status === "draft").length || 0,
+  };
+
   const config = [
     {
       icon: Users,
@@ -55,11 +64,21 @@ function InstructorDashboard({ listOfCourses }) {
       label: "Tổng doanh thu",
       value: calculateTotalStudentsAndProfit().totalProfit,
     },
+    {
+      icon: FileText,
+      label: "Tổng số bài viết",
+      value: blogStats.totalBlogs,
+    },
+    {
+      icon: TrendingUp,
+      label: "Bài viết đã xuất bản",
+      value: blogStats.publishedBlogs,
+    },
   ];
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {config.map((item) => (
           <Card key={item.label}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -111,6 +130,7 @@ function InstructorDashboard({ listOfCourses }) {
 
 InstructorDashboard.propTypes = {
   listOfCourses: PropTypes.array,
+  listOfBlogs: PropTypes.array,
 };
 
 export default InstructorDashboard;

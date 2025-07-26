@@ -13,10 +13,15 @@ import "antd/dist/reset.css";
 import { StarFilled } from "@ant-design/icons";
 import Footer from "@/components/ui/footer";
 import LoadingSpinner from "@/components/ui/loading-spinner";
+import HomeSidebar from "@/components/home-page/home-sidebar";
 
 function StudentHomePage() {
-  const { studentViewCoursesList, setStudentViewCoursesList, loadingState, setLoadingState } =
-    useContext(StudentContext);
+  const {
+    studentViewCoursesList,
+    setStudentViewCoursesList,
+    loadingState,
+    setLoadingState,
+  } = useContext(StudentContext);
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -41,6 +46,10 @@ function StudentHomePage() {
       }
     }
   }
+
+  const handlePostClick = (postId) => {
+    navigate(`/blog/${postId}`);
+  };
 
   useEffect(() => {
     fetchAllStudentViewCourses();
@@ -123,45 +132,55 @@ function StudentHomePage() {
         </div>
       </section> */}
       <section className="py-12 px-4 lg:px-8">
-        <h2 className="text-2xl font-bold mb-6">Khóa học nổi bật</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
-            studentViewCoursesList.map((courseItem) => (
-              <div
-                key={courseItem?._id}
-                onClick={() => handleCourseNavigate(courseItem?._id)}
-                className="border rounded-2xl overflow-hidden shadow-lg cursor-pointer transition-transform hover:scale-105 bg-white"
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Main content - Khóa học nổi bật */}
+          <div className="flex-1">
+            <h2 className="text-2xl font-bold mb-6">Khóa học nổi bật</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+              {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
+                studentViewCoursesList.map((courseItem) => (
+                  <div
+                    key={courseItem?._id}
+                    onClick={() => handleCourseNavigate(courseItem?._id)}
+                    className="border rounded-2xl overflow-hidden shadow-lg cursor-pointer transition-transform hover:scale-105 bg-white"
+                  >
+                    <img
+                      src={courseItem?.image}
+                      width={400}
+                      height={200}
+                      className="w-full h-56 object-cover"
+                    />
+                    <div className="p-6">
+                      <h3 className="font-bold text-lg mb-2 truncate">
+                        {courseItem?.title}
+                      </h3>
+                      <p className="text-sm text-gray-700 mb-2 truncate">
+                        {courseItem?.instructorName}
+                      </p>
+                      <p className="font-bold text-xl text-primary">
+                        ${courseItem?.pricing}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <h2 className="text-2xl font-bold">
+                  Không tìm thấy khóa học nào
+                </h2>
+              )}
+            </div>
+            <div className="flex justify-center mt-10">
+              <Button
+                className="px-8 py-3 text-lg font-semibold rounded-full shadow-md"
+                onClick={() => navigate("/courses")}
               >
-                <img
-                  src={courseItem?.image}
-                  width={400}
-                  height={200}
-                  className="w-full h-56 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="font-bold text-lg mb-2 truncate">
-                    {courseItem?.title}
-                  </h3>
-                  <p className="text-sm text-gray-700 mb-2 truncate">
-                    {courseItem?.instructorName}
-                  </p>
-                  <p className="font-bold text-xl text-primary">
-                    ${courseItem?.pricing}
-                  </p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <h2 className="text-2xl font-bold">Không tìm thấy khóa học nào</h2>
-          )}
-        </div>
-        <div className="flex justify-center mt-10">
-          <Button
-            className="px-8 py-3 text-lg font-semibold rounded-full shadow-md"
-            onClick={() => navigate("/courses")}
-          >
-            Xem tất cả khóa học
-          </Button>
+                Xem tất cả khóa học
+              </Button>
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <HomeSidebar onPostClick={handlePostClick} />
         </div>
       </section>
       {/* Carousel đánh giá học viên + Thông số nổi bật - layout đơn giản, đều nhau, không tiêu đề */}
