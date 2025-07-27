@@ -4,6 +4,7 @@ import { Calendar, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import { fetchRecentBlogsService } from "@/services";
 import LoadingSpinner from "@/components/ui/loading-spinner";
+import { Link } from "react-router-dom";
 
 function HomeSidebar({ onPostClick }) {
   const [latestPosts, setLatestPosts] = useState([]);
@@ -150,7 +151,7 @@ function HomeSidebar({ onPostClick }) {
           {/* Nút xem tất cả bài viết */}
           <div className="mt-4 pt-4 border-t">
             <button className="w-full text-center text-sm text-primary hover:text-primary/80 font-medium transition-colors">
-              Xem tất cả bài viết →
+              <Link to="/blog">Xem tất cả bài viết →</Link>
             </button>
           </div>
         </Card>
