@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BlogPage from "@/components/blog-page";
 import { fetchPublicBlogListService } from "@/services";
+import { images } from "@/lib/images";
 
 const mockPosts = [
   {
@@ -9,7 +10,7 @@ const mockPosts = [
     title: "Lợi ích của việc học trực tuyến",
     summary:
       "Khám phá những lợi ích nổi bật của việc học trực tuyến trong thời đại số.",
-    image: "/banners-img.jpg",
+    image: images.banner.jpg,
     category: "Học tập",
     author: "Admin",
     createdAt: "2024-01-15T10:30:00.000Z",
@@ -20,7 +21,7 @@ const mockPosts = [
     title: "5 mẹo để học hiệu quả hơn",
     summary:
       "Những bí quyết giúp bạn tối ưu hóa quá trình học tập và đạt kết quả cao.",
-    image: "/banners-img.jpg",
+    image: images.banner.jpg,
     category: "Kỹ năng",
     author: "Chuyên gia",
     createdAt: "2024-01-10T14:20:00.000Z",
@@ -31,7 +32,7 @@ const mockPosts = [
     title: "Tại sao nên chọn các khóa học kỹ năng mềm?",
     summary:
       "Kỹ năng mềm ngày càng quan trọng trong công việc và cuộc sống. Hãy tìm hiểu lý do tại sao!",
-    image: "/banners-img.jpg",
+    image: images.banner.jpg,
     category: "Phát triển",
     author: "Coach",
     createdAt: "2024-01-08T09:15:00.000Z",
@@ -42,7 +43,7 @@ const mockPosts = [
     title: "Cách xây dựng thói quen học tập tốt",
     summary:
       "Hướng dẫn chi tiết cách tạo lập và duy trì những thói quen học tập hiệu quả.",
-    image: "/banners-img.jpg",
+    image: images.banner.jpg,
     category: "Học tập",
     author: "Giáo viên",
     createdAt: "2024-01-05T16:45:00.000Z",
@@ -53,7 +54,7 @@ const mockPosts = [
     title: "Công nghệ AI trong giáo dục",
     summary:
       "Tìm hiểu về vai trò và ứng dụng của trí tuệ nhân tạo trong lĩnh vực giáo dục hiện đại.",
-    image: "/banners-img.jpg",
+    image: images.banner.jpg,
     category: "Công nghệ",
     author: "Tech Expert",
     createdAt: "2024-01-03T11:20:00.000Z",
@@ -64,7 +65,7 @@ const mockPosts = [
     title: "Phương pháp học ngoại ngữ hiệu quả",
     summary:
       "Những phương pháp và công cụ giúp bạn học ngoại ngữ một cách hiệu quả và nhanh chóng.",
-    image: "/banners-img.jpg",
+    image: images.banner.jpg,
     category: "Ngôn ngữ",
     author: "Language Coach",
     createdAt: "2024-01-01T08:30:00.000Z",

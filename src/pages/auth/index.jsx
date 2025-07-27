@@ -12,6 +12,8 @@ import { AuthContext } from "@/context/auth-context";
 import { GraduationCap } from "lucide-react";
 import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+// Import image utility
+import { images, handleImageError } from "@/lib/images";
 
 function AuthPage() {
   const [activeTab, setActiveTab] = useState("signin");
@@ -57,9 +59,10 @@ function AuthPage() {
     <div className="relative flex flex-col min-h-screen">
       <div className="absolute inset-0 w-full h-full -z-10">
         <img
-          src="/banners-img.jpg"
+          src={images.banner.jpg}
           alt="background"
           className="object-cover w-full h-full"
+          onError={(e) => handleImageError(e, "#1e293b")}
         />
         <div className="absolute inset-0 bg-black/50 backdrop-blur-md" />
       </div>
