@@ -22,7 +22,7 @@ function Footer() {
           <div className="flex items-center gap-2 text-sm">
             <span className="font-medium">Facebook:</span>
             <a
-              href="https://facebook.com/sushilearning"
+              href="https://facebook.com/info.minhdung09.pro/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:underline"
