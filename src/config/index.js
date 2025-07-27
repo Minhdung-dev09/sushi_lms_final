@@ -85,14 +85,14 @@ export const courseCategories = [
 export const courseLandingPageFormControls = [
   {
     name: "title",
-    label: "Title",
+    label: "Tiêu đề",
     componentType: "input",
     type: "text",
-    placeholder: "Enter course title",
+    placeholder: "Nhập tiêu đề",
   },
   {
     name: "category",
-    label: "Category",
+    label: "Danh mục",
     componentType: "select",
     type: "text",
     placeholder: "",
@@ -100,7 +100,7 @@ export const courseLandingPageFormControls = [
   },
   {
     name: "level",
-    label: "Level",
+    label: "Cấp độ",
     componentType: "select",
     type: "text",
     placeholder: "",
@@ -108,7 +108,7 @@ export const courseLandingPageFormControls = [
   },
   {
     name: "primaryLanguage",
-    label: "Primary Language",
+    label: "Ngôn ngữ chính",
     componentType: "select",
     type: "text",
     placeholder: "",
@@ -116,37 +116,37 @@ export const courseLandingPageFormControls = [
   },
   {
     name: "subtitle",
-    label: "Subtitle",
+    label: "Tiêu đề phụ",
     componentType: "input",
     type: "text",
-    placeholder: "Enter course subtitle",
+    placeholder: "Nhập tiêu đề phụ",
   },
   {
     name: "description",
-    label: "Description",
+    label: "Mô tả",
     componentType: "textarea",
     type: "text",
-    placeholder: "Enter course description",
+    placeholder: "Nhập mô tả",
   },
   {
     name: "pricing",
-    label: "Pricing",
+    label: "Giá",
     componentType: "input",
     type: "number",
-    placeholder: "Enter course pricing",
+    placeholder: "Nhập giá",
   },
   {
     name: "objectives",
-    label: "Objectives",
+    label: "Mục tiêu",
     componentType: "textarea",
     type: "text",
-    placeholder: "Enter course objectives",
+    placeholder: "Nhập mục tiêu",
   },
   {
     name: "welcomeMessage",
-    label: "Welcome Message",
+    label: "Lời chào",
     componentType: "textarea",
-    placeholder: "Welcome message for students",
+    placeholder: "Nhập lời chào",
   },
 ];
 

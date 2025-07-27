@@ -160,7 +160,7 @@ function StudentHomePage() {
                         {courseItem?.instructorName}
                       </p>
                       <p className="font-bold text-xl text-primary">
-                        ${courseItem?.pricing}
+                        {courseItem?.pricing * 23000} VNĐ
                       </p>
                     </div>
                   </div>
