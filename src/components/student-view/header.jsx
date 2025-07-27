@@ -159,7 +159,7 @@ function StudentViewCommonHeader() {
                 className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-medium ${
                   isActivePage("/courses")
                     ? "bg-blue-200 text-gray-900"
-                    : "hover:bg-gray-50 text-gray-900"
+                    : ""
                 }`}
               >
                 Khám phá khóa học
@@ -173,7 +173,7 @@ function StudentViewCommonHeader() {
                 className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-medium ${
                   isActivePage("/blog")
                     ? "bg-blue-200 text-gray-900"
-                    : "hover:bg-gray-50 text-gray-900"
+                    : ""
                 }`}
               >
                 Bài viết
@@ -206,7 +206,7 @@ function StudentViewCommonHeader() {
                 className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-medium ${
                   isActivePage("/student-courses")
                     ? "bg-blue-200 text-gray-900"
-                    : "hover:bg-gray-50 text-gray-900"
+                    : ""
                 }`}
               >
                 Khóa học của tôi
