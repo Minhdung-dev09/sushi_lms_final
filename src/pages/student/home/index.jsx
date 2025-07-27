@@ -14,7 +14,6 @@ import { StarFilled } from "@ant-design/icons";
 import Footer from "@/components/ui/footer";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import HomeSidebar from "@/components/home-page/home-sidebar";
-import { images, handleImageError } from "@/lib/images";
 
 function StudentHomePage() {
   const {
@@ -111,11 +110,10 @@ function StudentHomePage() {
         </div>
         <div className="lg:w-full mb-8 lg:mb-0">
           <img
-            src={images.banner.jpg}
+            src="/banners-img.jpg"
             width={500}
             height={300}
             className="w-full h-auto rounded-lg shadow-lg"
-            onError={(e) => handleImageError(e, "#f3f4f6")}
           />
         </div>
       </section>
