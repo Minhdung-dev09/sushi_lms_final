@@ -156,7 +156,7 @@ function StudentViewCommonHeader() {
                   navigate("/courses");
                   closeMobileMenu();
                 }}
-                className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-medium ${
+                className={`w-full text-left bg-none py-3 px-4 rounded-lg transition-colors font-medium ${
                   isActivePage("/courses")
                     ? "bg-blue-200 text-gray-900"
                     : ""
@@ -170,7 +170,7 @@ function StudentViewCommonHeader() {
                   navigate("/blog");
                   closeMobileMenu();
                 }}
-                className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-medium ${
+                className={`w-full text-left bg-none py-3 px-4 rounded-lg transition-colors font-medium ${
                   isActivePage("/blog")
                     ? "bg-blue-200 text-gray-900"
                     : ""
@@ -203,7 +203,7 @@ function StudentViewCommonHeader() {
                   navigate("/student-courses");
                   closeMobileMenu();
                 }}
-                className={`w-full text-left py-3 px-4 rounded-lg transition-colors font-medium ${
+                className={`w-full text-left bg-none py-3 px-4 rounded-lg transition-colors font-medium ${
                   isActivePage("/student-courses")
                     ? "bg-blue-200 text-gray-900"
                     : ""
