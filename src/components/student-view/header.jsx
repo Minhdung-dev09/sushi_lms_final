@@ -132,12 +132,12 @@ function StudentViewCommonHeader() {
 
         {/* Menu Panel */}
         <div
-          className={`absolute top-0 right-0 w-80 h-full bg-white/65 backdrop-blur-sm shadow-2xl transform transition-transform duration-300 ease-out ${
+          className={`absolute top-0 right-0 w-80 h-full backdrop-blur-sm shadow-2xl transform transition-transform duration-300 ease-out ${
             isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b">
+          <div className="flex items-center justify-between p-6 border-b bg-white/65 backdrop-blur-sm">
             <h2 className="text-xl font-semibold text-gray-900">Menu</h2>
             <button
               onClick={closeMobileMenu}
@@ -148,7 +148,7 @@ function StudentViewCommonHeader() {
           </div>
 
           {/* Menu Content */}
-          <div className="p-6">
+          <div className="p-6 bg-white/65 backdrop-blur-sm">
             {/* Navigation Links */}
             <div className="space-y-2">
               <button
@@ -157,9 +157,7 @@ function StudentViewCommonHeader() {
                   closeMobileMenu();
                 }}
                 className={`w-full text-left bg-none py-3 px-4 rounded-lg transition-colors font-medium ${
-                  isActivePage("/courses")
-                    ? "bg-blue-200 text-gray-900"
-                    : ""
+                  isActivePage("/courses") ? "bg-blue-200 text-gray-900" : ""
                 }`}
               >
                 Khám phá khóa học
@@ -171,9 +169,7 @@ function StudentViewCommonHeader() {
                   closeMobileMenu();
                 }}
                 className={`w-full text-left bg-none py-3 px-4 rounded-lg transition-colors font-medium ${
-                  isActivePage("/blog")
-                    ? "bg-blue-200 text-gray-900"
-                    : ""
+                  isActivePage("/blog") ? "bg-blue-200 text-gray-900" : ""
                 }`}
               >
                 Bài viết
