@@ -32,13 +32,13 @@ function Footer() {
           </div>
           <div className="flex items-center gap-2 text-sm">
             <span className="font-medium">SĐT:</span>
-            <a href="tel:0123456789" className="hover:underline">
-              0123 456 789
+            <a href="tel:0868298662" className="hover:underline">
+              0868298662
             </a>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <span className="font-medium">Địa chỉ:</span>
-            <span>123 Đường Học Tập, Quận Tri Thức, TP. Hà Nội</span>
+            <span>Bắc Từ Liêm - Hà Nội</span>
           </div>
         </div>
       </div>
