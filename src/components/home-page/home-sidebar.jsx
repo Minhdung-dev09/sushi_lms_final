@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { fetchRecentBlogsService } from "@/services";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Link } from "react-router-dom";
+import { images, handleImageError } from "@/lib/images";
+import PropTypes from "prop-types";
 
 function HomeSidebar({ onPostClick }) {
   const [latestPosts, setLatestPosts] = useState([]);
@@ -73,9 +75,10 @@ function HomeSidebar({ onPostClick }) {
           <div className="bg-gray-100 rounded-lg p-4 min-h-[250px] flex items-center justify-center">
             <div className="text-center text-gray-500">
               <img
-                src="/ads.png"
+                src={images.ads}
                 className="w-60 h-30 mb-14"
                 alt="Quảng cáo"
+                onError={(e) => handleImageError(e, "#f3f4f6")}
               />
               <p className="text-sm">
                 <a
@@ -110,9 +113,10 @@ function HomeSidebar({ onPostClick }) {
                     {/* Hình ảnh bài viết */}
                     <div className="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
                       <img
-                        src={post.image || "/banners-img.jpg"}
+                        src={post.image || images.banner.jpg}
                         alt={post.title}
                         className="w-full h-full object-cover"
+                        onError={(e) => handleImageError(e, "#f3f4f6")}
                       />
                     </div>
 
@@ -161,3 +165,7 @@ function HomeSidebar({ onPostClick }) {
 }
 
 export default HomeSidebar;
+
+HomeSidebar.propTypes = {
+  onPostClick: PropTypes.func.isRequired,
+};
