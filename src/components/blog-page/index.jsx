@@ -87,7 +87,6 @@ function BlogPage({ posts, onPostClick }) {
     <div className="container mx-auto p-4">
       {/* Header với title và nút toggle sidebar */}
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold">Bài viết nổi bật</h1>
         <div className="flex items-center gap-2">
           <Button
             variant={viewMode === "all" ? "default" : "outline"}
