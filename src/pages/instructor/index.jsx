@@ -19,7 +19,6 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
-import { images } from "@/lib/images";
 
 function InstructorDashboardpage() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -53,7 +52,7 @@ function InstructorDashboardpage() {
             content: "Nội dung chi tiết về lợi ích học trực tuyến...",
             category: "Học tập",
             author: "Admin",
-            image: images.banner.jpg,
+            image: "/banners-img.jpg",
             tags: ["học trực tuyến", "giáo dục", "công nghệ"],
             status: "published",
             createdAt: "2024-01-15",
@@ -66,7 +65,7 @@ function InstructorDashboardpage() {
             content: "Nội dung chi tiết về các mẹo học tập...",
             category: "Kỹ năng",
             author: "Chuyên gia",
-            image: images.banner.jpg,
+            image: "/banners-img.jpg",
             tags: ["học tập", "kỹ năng", "hiệu quả"],
             status: "draft",
             createdAt: "2024-01-10",
@@ -86,7 +85,7 @@ function InstructorDashboardpage() {
           content: "Nội dung chi tiết về lợi ích học trực tuyến...",
           category: "Học tập",
           author: "Admin",
-          image: images.banner.jpg,
+          image: "/banners-img.jpg",
           tags: ["học trực tuyến", "giáo dục", "công nghệ"],
           status: "published",
           createdAt: "2024-01-15",
@@ -99,7 +98,7 @@ function InstructorDashboardpage() {
           content: "Nội dung chi tiết về các mẹo học tập...",
           category: "Kỹ năng",
           author: "Chuyên gia",
-          image: images.banner.jpg,
+          image: "/banners-img.jpg",
           tags: ["học tập", "kỹ năng", "hiệu quả"],
           status: "draft",
           createdAt: "2024-01-10",
