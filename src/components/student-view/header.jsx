@@ -137,7 +137,7 @@ function StudentViewCommonHeader() {
           }`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b bg-white/65 backdrop-blur-sm">
+          <div className="flex items-center justify-between p-6 border-b bg-white backdrop-blur-sm">
             <h2 className="text-xl font-semibold text-gray-900">Menu</h2>
             <button
               onClick={closeMobileMenu}
@@ -148,7 +148,7 @@ function StudentViewCommonHeader() {
           </div>
 
           {/* Menu Content */}
-          <div className="p-6 bg-white/65 backdrop-blur-sm">
+          <div className="p-6 bg-white backdrop-blur-sm">
             {/* Navigation Links */}
             <div className="space-y-2">
               <button
