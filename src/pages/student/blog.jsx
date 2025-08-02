@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import BlogPage from "@/components/blog-page";
 import { fetchPublicBlogListService } from "@/services";
 
@@ -75,6 +76,7 @@ const mockPosts = [
 function StudentBlogPage() {
   const [posts, setPosts] = useState(mockPosts);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -103,7 +105,7 @@ function StudentBlogPage() {
     return (
       <div className="container mx-auto p-4">
         <div className="flex items-center justify-center h-64">
-          <div className="text-lg">Đang tải bài viết...</div>
+          <div className="text-lg">{t('errors.loadingBlogs')}</div>
         </div>
       </div>
     );

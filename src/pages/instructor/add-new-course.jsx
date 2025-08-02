@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import {
   courseCurriculumInitialFormData,
   courseLandingInitialFormData,
@@ -30,6 +31,7 @@ function AddNewCoursePage() {
   } = useContext(InstructorContext);
 
   const { auth } = useContext(AuthContext);
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const params = useParams();
 
@@ -90,8 +92,8 @@ function AddNewCoursePage() {
 
     if (response?.success) {
       toast({
-        title: currentEditedCourseId !== null ? "Cập nhật khóa học thành công!" : "Tạo khóa học thành công!",
-        description: currentEditedCourseId !== null ? "Khóa học đã được cập nhật." : "Khóa học mới đã được tạo.",
+        title: currentEditedCourseId !== null ? t('notifications.courseUpdateSuccess') : t('notifications.courseCreateSuccess'),
+        description: currentEditedCourseId !== null ? t('notifications.courseUpdateSuccessDesc') : t('notifications.courseCreateSuccessDesc'),
         status: "success",
       });
       setCourseLandingFormData(courseLandingInitialFormData);
@@ -100,8 +102,8 @@ function AddNewCoursePage() {
       setCurrentEditedCourseId(null);
     } else {
       toast({
-        title: currentEditedCourseId !== null ? "Cập nhật khóa học thất bại!" : "Tạo khóa học thất bại!",
-        description: response?.message || "Vui lòng thử lại.",
+        title: currentEditedCourseId !== null ? t('notifications.courseUpdateFailed') : t('notifications.courseCreateFailed'),
+        description: response?.message || t('common.pleaseTryAgain'),
         status: "error",
       });
     }
@@ -144,7 +146,7 @@ function AddNewCoursePage() {
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between">
-        <h1 className="text-3xl font-extrabold mb-5">Tạo khóa học mới</h1>
+        <h1 className="text-3xl font-extrabold mb-5">{t('instructor.createNewCourseTitle')}</h1>
         <Button
           disabled={!validateFormData()}
           className="text-sm tracking-wider font-bold px-8"
@@ -158,11 +160,11 @@ function AddNewCoursePage() {
           <div className="container mx-auto p-4">
             <Tabs defaultValue="curriculum" className="space-y-4">
               <TabsList>
-                <TabsTrigger value="curriculum">Nội dung</TabsTrigger>
+                <TabsTrigger value="curriculum">{t('course.curriculum')}</TabsTrigger>
                 <TabsTrigger value="course-landing-page">
-                  Trang giới thiệu
+                  {t('course.landingPage')}
                 </TabsTrigger>
-                <TabsTrigger value="settings">Cài đặt</TabsTrigger>
+                <TabsTrigger value="settings">{t('common.settings')}</TabsTrigger>
               </TabsList>
               <TabsContent value="curriculum">
                 <CourseCurriculum />

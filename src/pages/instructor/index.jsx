@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { AuthContext } from "@/context/auth-context";
 import { InstructorContext } from "@/context/instructor-context";
+import { useTranslation } from "react-i18next";
+import LanguageToggle from "@/components/ui/language-toggle";
 import {
   fetchInstructorCourseListService,
   fetchInstructorBlogListService,
@@ -24,6 +26,7 @@ function InstructorDashboardpage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { resetCredentials, auth } = useContext(AuthContext);
+  const { t } = useTranslation();
   const {
     instructorCoursesList,
     setInstructorCoursesList,
@@ -116,7 +119,7 @@ function InstructorDashboardpage() {
   const menuItems = [
     {
       icon: BarChart,
-      label: "Bảng điều khiển",
+      label: t('instructor.dashboard'),
       value: "dashboard",
       component: (
         <InstructorDashboard
@@ -127,13 +130,13 @@ function InstructorDashboardpage() {
     },
     {
       icon: Book,
-      label: "Khóa học",
+      label: t('common.courses'),
       value: "courses",
       component: <InstructorCourses listOfCourses={instructorCoursesList} />,
     },
     {
       icon: FileText,
-      label: "Bài viết",
+      label: t('common.blog'),
       value: "blogs",
       component: (
         <InstructorBlog
@@ -144,7 +147,7 @@ function InstructorDashboardpage() {
     },
     {
       icon: LogOut,
-      label: "Đăng xuất",
+      label: t('common.logout'),
       value: "logout",
       component: null,
     },
@@ -212,6 +215,10 @@ function InstructorDashboardpage() {
                 </Button>
               ))}
             </nav>
+            {/* Language Toggle */}
+            <div className="mt-4 pt-4 border-t">
+              <LanguageToggle variant="text" className="w-full justify-start" />
+            </div>
           </div>
         </aside>
 
@@ -219,7 +226,7 @@ function InstructorDashboardpage() {
         <main className="flex-1 p-4 md:p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto">
             <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8">
-              Bảng điều khiển
+              {t('instructor.dashboard')}
             </h1>
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               {menuItems.map((menuItem) => (
@@ -254,7 +261,7 @@ function InstructorDashboardpage() {
         >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b">
-            <h2 className="text-xl font-semibold text-gray-900">Menu</h2>
+            <h2 className="text-xl font-semibold text-gray-900">{t('navigation.menu')}</h2>
             <button
               onClick={closeMobileMenu}
               className="flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100 transition-colors"
@@ -293,6 +300,11 @@ function InstructorDashboardpage() {
                   <span className="font-medium">{menuItem.label}</span>
                 </button>
               ))}
+            </div>
+
+            {/* Language Toggle */}
+            <div className="mt-4 pt-4 border-t">
+              <LanguageToggle variant="text" className="w-full justify-start" />
             </div>
           </div>
         </div>

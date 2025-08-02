@@ -9,12 +9,15 @@ import {
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { signInFormControls, signUpFormControls } from "@/config";
 import { AuthContext } from "@/context/auth-context";
+import { useTranslation } from "react-i18next";
+import LanguageToggle from "@/components/ui/language-toggle";
 import { GraduationCap } from "lucide-react";
 import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function AuthPage() {
   const [activeTab, setActiveTab] = useState("signin");
+  const { t } = useTranslation();
   const {
     signInFormData,
     setSignInFormData,
@@ -63,11 +66,12 @@ function AuthPage() {
         />
         <div className="absolute inset-0 bg-black/50 backdrop-blur-md" />
       </div>
-      <header className="px-4 lg:px-6 h-14 flex items-center border-b bg-white/30 backdrop-blur-lg z-10 shadow-md">
+      <header className="px-4 lg:px-6 h-14 flex items-center justify-between border-b bg-white/30 backdrop-blur-lg z-10 shadow-md">
         <Link to={"/"} className="flex items-center justify-center">
           <GraduationCap className="h-8 w-8 mr-4" />
           <span className="font-extrabold text-xl">Sushi Learning</span>
         </Link>
+        <LanguageToggle variant="icon" />
       </header>
       <div className="flex items-center justify-center min-h-screen">
         <Tabs
@@ -79,28 +83,28 @@ function AuthPage() {
           <TabsContent value="signin">
             <Card className="p-10 space-y-4 bg-white/60 backdrop-blur-xl shadow-2xl hover:shadow-3xl transition-shadow border border-white/40 rounded-3xl">
               <CardHeader>
-                <CardTitle>Đăng nhập vào tài khoản</CardTitle>
+                <CardTitle>{t('auth.loginTitle')}</CardTitle>
                 <CardDescription>
-                  Nhập email và mật khẩu để truy cập tài khoản
+                  {t('auth.email')} {t('common.and')} {t('auth.password')} {t('common.to')} {t('common.access')} {t('common.account')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
                 <CommonForm
                   formControls={signInFormControls}
-                  buttonText={"Đăng nhập"}
+                  buttonText={t('auth.loginButton')}
                   formData={signInFormData}
                   setFormData={setSignInFormData}
                   isButtonDisabled={!checkIfSignInFormIsValid()}
                   handleSubmit={handleLoginUser}
                 />
                 <div className="text-center mt-4">
-                  <span>Chưa có tài khoản? </span>
+                  <span>{t('auth.dontHaveAccount')} </span>
                   <button
                     type="button"
                     className="text-blue-600 hover:underline focus:outline-none"
                     onClick={() => setActiveTab("signup")}
                   >
-                    Đăng ký
+                    {t('auth.registerButton')}
                   </button>
                 </div>
               </CardContent>
@@ -109,26 +113,26 @@ function AuthPage() {
           <TabsContent value="signup">
             <Card className="p-10 space-y-4 bg-white/60 backdrop-blur-xl shadow-2xl hover:shadow-3xl transition-shadow border border-white/40 rounded-3xl">
               <CardHeader>
-                <CardTitle>Tạo tài khoản mới</CardTitle>
-                <CardDescription>Nhập thông tin để bắt đầu</CardDescription>
+                <CardTitle>{t('auth.registerTitle')}</CardTitle>
+                <CardDescription>{t('common.enter')} {t('common.information')} {t('common.to')} {t('common.start')}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
                 <CommonForm
                   formControls={signUpFormControls}
-                  buttonText={"Đăng ký"}
+                  buttonText={t('auth.registerButton')}
                   formData={signUpFormData}
                   setFormData={setSignUpFormData}
                   isButtonDisabled={!checkIfSignUpFormIsValid()}
                   handleSubmit={handleRegisterUser}
                 />
                 <div className="text-center mt-4">
-                  <span>Đã có tài khoản? </span>
+                  <span>{t('auth.alreadyHaveAccount')} </span>
                   <button
                     type="button"
                     className="text-blue-600 hover:underline focus:outline-none"
                     onClick={() => setActiveTab("signin")}
                   >
-                    Đăng nhập
+                    {t('auth.loginButton')}
                   </button>
                 </div>
               </CardContent>

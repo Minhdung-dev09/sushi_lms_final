@@ -1,17 +1,20 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 import { Calendar, User } from "lucide-react";
 
 function BlogGrid({ posts, onPostClick }) {
+  const { t } = useTranslation();
+  
   if (!posts || posts.length === 0) {
     return (
       <div className="text-center py-12">
         <h2 className="font-bold text-2xl text-gray-600 mb-2">
-          Không tìm thấy bài viết nào
+          {t('errors.noBlogsFound')}
         </h2>
         <p className="text-gray-500">
-          Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm
+          {t('common.try')} {t('common.change')} {t('common.filter')} {t('common.or')} {t('common.keyword')}
         </p>
       </div>
     );
@@ -60,7 +63,7 @@ function BlogGrid({ posts, onPostClick }) {
                 size="sm"
                 className="text-primary hover:text-primary/80"
               >
-                Đọc tiếp
+                {t('blog.readMore')}
               </Button>
             </div>
           </div>
