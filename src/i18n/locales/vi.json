@@ -42,7 +42,8 @@
     "change": "thay đổi",
     "filter": "bộ lọc",
     "or": "hoặc",
-    "keyword": "từ khóa tìm kiếm"
+    "keyword": "từ khóa tìm kiếm",
+    "advertisement": "Quảng cáo"
   },
   "navigation": {
     "dashboard": "Bảng điều khiển",
@@ -225,5 +226,45 @@
     "backToBlogList": "Quay lại danh sách bài viết",
     "backToMyCourses": "Quay lại trang khóa học của tôi",
     "myCoursesPage": "Trang khóa học của tôi"
+  },
+  "banner": {
+    "slide1": {
+      "title": "Học Tập Hiệu Quả – Phát Triển Bứt Phá",
+      "subtitle": "Kỹ năng cho hiện tại và tương lai của bạn. Bắt đầu ngay với chúng tôi"
+    },
+    "slide2": {
+      "title": "Khóa Học Chất Lượng Cao",
+      "subtitle": "Học từ các chuyên gia hàng đầu với phương pháp hiện đại"
+    },
+    "slide3": {
+      "title": "Cộng Đồng Học Tập Sôi Động",
+      "subtitle": "Tham gia cùng hàng nghìn học viên khác trên toàn quốc"
+    },
+    "slide4": {
+      "title": "Quảng Cáo & Marketing",
+      "subtitle": "Khám phá các khóa học marketing và quảng cáo chuyên nghiệp"
+    },
+    "slide5": {
+      "title": "Animation & Thiết Kế",
+      "subtitle": "Học thiết kế animation và đồ họa chuyên nghiệp"
+    },
+    "exploreCourses": "Khám phá khóa học",
+    "readBlog": "Đọc blog"
+  },
+  "home": {
+    "featuredCourses": "Khóa học nổi bật",
+    "viewAllCourses": "Xem tất cả khóa học",
+    "noCoursesFound": "Không tìm thấy khóa học nào",
+    "noCoursesFoundDesc": "Vui lòng thử lại sau hoặc liên hệ với chúng tôi",
+    "sidebar": {
+      "latestPosts": "Bài viết mới nhất",
+      "popularPosts": "Bài viết phổ biến",
+      "categories": "Danh mục",
+      "tags": "Thẻ",
+      "newsletter": "Bản tin",
+      "newsletterDesc": "Đăng ký nhận bản tin để cập nhật",
+      "subscribe": "Đăng ký",
+      "emailPlaceholder": "Nhập email của bạn"
+    }
   }
 } 

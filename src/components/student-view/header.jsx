@@ -155,13 +155,7 @@ function StudentViewCommonHeader() {
                     <span>{t('common.myCourses')}</span>
                   </DropdownMenuItem>
                   
-                  <DropdownMenuItem
-                    onClick={() => navigate("/settings")}
-                    className="cursor-pointer flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <Settings className="w-4 h-4" />
-                    <span>Settings</span>
-                  </DropdownMenuItem>
+
                   
                   <DropdownMenuSeparator />
                   
@@ -302,16 +296,7 @@ function StudentViewCommonHeader() {
                 <span>{t('common.myCourses')}</span>
               </button>
 
-              <button
-                onClick={() => {
-                  navigate("/settings");
-                  closeMobileMenu();
-                }}
-                className="w-full flex items-center space-x-3 text-left py-4 px-4 rounded-xl hover:bg-gray-50 transition-colors duration-200 text-gray-700 font-medium"
-              >
-                <Settings className="w-5 h-5" />
-                <span>Settings</span>
-              </button>
+
 
               <button
                 onClick={() => {

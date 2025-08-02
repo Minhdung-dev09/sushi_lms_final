@@ -5,8 +5,10 @@ import { useState, useEffect } from "react";
 import { fetchRecentBlogsService } from "@/services";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function HomeSidebar({ onPostClick }) {
+  const { t } = useTranslation();
   const [latestPosts, setLatestPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -39,7 +41,7 @@ function HomeSidebar({ onPostClick }) {
           {/* Quảng cáo Google */}
           <Card className="p-4">
             <h3 className="font-semibold mb-3 text-sm text-gray-600 uppercase tracking-wide">
-              Quảng cáo
+              {t("common.advertisement")}
             </h3>
             <div className="bg-gray-100 rounded-lg p-4 min-h-[250px] flex items-center justify-center">
               <div className="text-center text-gray-500">
@@ -52,7 +54,7 @@ function HomeSidebar({ onPostClick }) {
 
           {/* Loading state cho bài viết mới nhất */}
           <Card className="p-4">
-            <h3 className="font-semibold mb-4 text-lg">Bài viết mới nhất</h3>
+            <h3 className="font-semibold mb-4 text-lg">{t("home.sidebar.latestPosts")}</h3>
             <div className="flex items-center justify-center py-8">
               <LoadingSpinner />
             </div>
@@ -68,7 +70,7 @@ function HomeSidebar({ onPostClick }) {
         {/* Quảng cáo Google */}
         <Card className="p-4">
           <h3 className="font-semibold mb-3 text-sm text-gray-600 uppercase tracking-wide">
-            Quảng cáo
+            {t("common.advertisement")}
           </h3>
           <div className="bg-gray-100 rounded-lg p-4 min-h-[250px] flex items-center justify-center">
             <div className="text-center text-gray-500">
@@ -93,10 +95,10 @@ function HomeSidebar({ onPostClick }) {
 
         {/* Top 5 bài viết mới nhất */}
         <Card className="p-4">
-          <h3 className="font-semibold mb-4 text-lg">Bài viết mới nhất</h3>
+          <h3 className="font-semibold mb-4 text-lg">{t("home.sidebar.latestPosts")}</h3>
           {error ? (
             <div className="text-center py-4 text-gray-500">
-              Không thể tải bài viết
+              {t("errors.cannotLoadBlogs")}
             </div>
           ) : latestPosts.length > 0 ? (
             <div className="space-y-4">
@@ -144,14 +146,14 @@ function HomeSidebar({ onPostClick }) {
             </div>
           ) : (
             <div className="text-center py-4 text-gray-500">
-              Chưa có bài viết nào
+              {t("errors.noBlogsYet")}
             </div>
           )}
 
           {/* Nút xem tất cả bài viết */}
           <div className="mt-4 pt-4 border-t">
             <button className="w-full text-center text-sm text-primary hover:text-primary/80 font-medium transition-colors">
-              <Link to="/blog">Xem tất cả bài viết →</Link>
+              <Link to="/blog">{t("blog.viewAllPosts")} →</Link>
             </button>
           </div>
         </Card>
