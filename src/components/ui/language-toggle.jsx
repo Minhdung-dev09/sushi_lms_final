@@ -2,7 +2,7 @@ import React from 'react';
 import { useLanguage } from '@/context/language-context';
 import { useTranslation } from 'react-i18next';
 import { Button } from './button';
-import { Globe } from 'lucide-react';
+import { Star, Book } from 'lucide-react';
 
 const LanguageToggle = ({ className = '', variant = 'default' }) => {
   const { currentLanguage, toggleLanguage, isVietnamese, isEnglish } = useLanguage();
@@ -22,11 +22,11 @@ const LanguageToggle = ({ className = '', variant = 'default' }) => {
         variant="ghost"
         size="sm"
         onClick={toggleLanguage}
-        className={`flex items-center gap-2 ${className}`}
+        className={`flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors ${className}`}
         title={t('common.language')}
       >
-        <Globe className="w-4 h-4" />
-        <span className="text-xs font-medium">{getLanguageCode()}</span>
+        {isVietnamese ? <span className='w-4 h-4 flex items-center'><img src="/en.webp" alt="" className="w-full h-full object-contain" /></span> : <span className='w-4 h-4 flex items-center'><img src="/vn.webp" alt="" className="w-full h-full object-contain" /></span>}
+        <span className="text-xs font-medium text-gray-700 flex items-center">{getLanguageCode()}</span>
       </Button>
     );
   }
@@ -37,9 +37,10 @@ const LanguageToggle = ({ className = '', variant = 'default' }) => {
         variant="ghost"
         size="sm"
         onClick={toggleLanguage}
-        className={`${className}`}
+        className={`flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors ${className}`}
       >
-        {getLanguageText()}
+        {isVietnamese ? <span className='w-4 h-4 flex items-center'><img src="/en.webp" alt="" className="w-full h-full object-contain" /></span> : <span className='w-4 h-4 flex items-center'><img src="/vn.webp" alt="" className="w-full h-full object-contain" /></span>}
+        <span className="text-sm font-medium text-gray-700 flex items-center">{getLanguageText()}</span>
       </Button>
     );
   }
@@ -49,10 +50,10 @@ const LanguageToggle = ({ className = '', variant = 'default' }) => {
       variant="outline"
       size="sm"
       onClick={toggleLanguage}
-      className={`flex items-center gap-2 ${className}`}
+      className={`flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors ${className}`}
     >
-      <Globe className="w-4 h-4" />
-      <span>{getLanguageText()}</span>
+      {isVietnamese ? <span className='w-4 h-4 flex items-center'><img src="/en.webp" alt="" className="w-full h-full object-contain" /></span> : <span className='w-4 h-4 flex items-center'><img src="/vn.webp" alt="" className="w-full h-full object-contain" /></span>}
+      <span className="text-sm font-medium text-gray-700 flex items-center">{getLanguageText()}</span>
     </Button>
   );
 };

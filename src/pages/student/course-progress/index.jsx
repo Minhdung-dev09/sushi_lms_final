@@ -19,7 +19,7 @@ import {
   markLectureAsViewedService,
   resetCourseProgressService,
 } from "@/services";
-import { Check, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { BookOpen, Check, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { useNavigate, useParams } from "react-router-dom";
@@ -233,7 +233,8 @@ function StudentViewCourseProgressPage() {
             <TabsContent value="overview" className="flex-1 overflow-hidden">
               <ScrollArea className="h-full">
                 <div className="p-4">
-                  <h2 className="text-xl font-bold mb-4 text-black">
+                  <h2 className="text-xl font-medium text-gray-500 tracking-tight flex items-center gap-2">
+                    <BookOpen className="text-yellow-400" />
                     Về khóa học này
                   </h2>
                   <p className="text-gray-700">
