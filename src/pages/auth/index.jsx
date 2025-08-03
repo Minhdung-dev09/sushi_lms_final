@@ -60,7 +60,7 @@ function AuthPage() {
     <div className="relative flex flex-col min-h-screen">
       <header className="px-4 lg:px-6 h-14 flex items-center justify-between border-b bg-white shadow-sm z-20">
         <Link to={"/"} className="flex items-center justify-center">
-        <div className="text-2xl flex items-center gap-2 font-bold mb-2 text-yellow-400">
+          <div className="text-2xl flex items-center gap-2 font-bold mb-2 text-yellow-400">
             <img src="/logo.svg" alt="Sushi Learning" className="h-8 w-8" />
             <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Sushi Learning</span>
           </div>
