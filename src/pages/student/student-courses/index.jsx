@@ -4,7 +4,7 @@ import { AuthContext } from "@/context/auth-context";
 import { StudentContext } from "@/context/student-context";
 import { useTranslation } from "react-i18next";
 import { fetchStudentBoughtCoursesService } from "@/services";
-import { Watch } from "lucide-react";
+import { BookOpen, Watch } from "lucide-react";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +28,10 @@ function StudentCoursesPage() {
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold mb-8">{t('common.myCourses')}</h1>
+      <h1 className="text-xl font-medium pb-4 text-gray-500 tracking-tight flex items-center gap-2">
+        <BookOpen className="text-yellow-400" />
+        {t('common.myCourses')}
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {studentBoughtCoursesList && studentBoughtCoursesList.length > 0 ? (
           studentBoughtCoursesList.map((course) => (

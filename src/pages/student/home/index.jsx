@@ -222,7 +222,10 @@ function StudentHomePage() {
             {/* Main content - Khóa học nổi bật */}
             <div className="flex-1">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div className="mb-8">
-                     <h2 className="text-4xl font-medium text-gray-900 tracking-tight">{t("home.featuredCourses")}</h2>
+                     <h2 className="text-xl font-medium text-gray-500 tracking-tight flex items-center gap-2">
+                      <StarFilled className="text-yellow-400" />
+                      {t("home.featuredCourses")}
+                      </h2>
                    </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
