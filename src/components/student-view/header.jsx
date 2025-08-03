@@ -74,7 +74,7 @@ function StudentViewCommonHeader() {
                 className="flex items-center space-x-3 group transition-all duration-300 hover:scale-105"
               >
                 <div className="relative">
-                  <GraduationCap className="h-8 w-8 text-blue-600 group-hover:text-blue-700 transition-colors duration-300" />
+                  <img src="/logo.svg" alt="Sushi Learning" className="h-8 w-8" />
                   <div className="absolute inset-0 bg-blue-100 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 scale-150"></div>
                 </div>
                 <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">

@@ -44,10 +44,10 @@ function CourseSettings() {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Cài đặt khóa học</CardTitle>
+      <CardHeader className="p-4 sm:p-6">
+        <CardTitle className="text-lg sm:text-xl">Cài đặt khóa học</CardTitle>
       </CardHeader>
-      <div className="p-4">
+      <div className="px-4 sm:px-6">
         {mediaUploadProgress ? (
           <MediaProgressbar
             isMediaUploading={mediaUploadProgress}
@@ -55,16 +55,19 @@ function CourseSettings() {
           />
         ) : null}
       </div>
-      <CardContent>
+      <CardContent className="p-4 sm:p-6">
         {courseLandingFormData?.image ? (
-          <img src={courseLandingFormData.image} />
+          <div className="w-full">
+            <img src={courseLandingFormData.image} className="w-full max-w-md rounded-lg" alt="Course image" />
+          </div>
         ) : (
           <div className="flex flex-col gap-3">
-            <Label>Tải ảnh khóa học</Label>
+            <Label className="text-sm sm:text-base">Tải ảnh khóa học</Label>
             <Input
               onChange={handleImageUploadChange}
               type="file"
               accept="image/*"
+              className="w-full"
             />
           </div>
         )}
