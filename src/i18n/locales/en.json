@@ -42,7 +42,8 @@
     "change": "change",
     "filter": "filter",
     "or": "or",
-    "keyword": "search keyword"
+    "keyword": "search keyword",
+    "advertisement": "Advertisement"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -225,5 +226,45 @@
     "backToBlogList": "Back to post list",
     "backToMyCourses": "Back to my courses page",
     "myCoursesPage": "My courses page"
+  },
+  "banner": {
+    "slide1": {
+      "title": "Effective Learning – Breakthrough Development",
+      "subtitle": "Skills for your present and future. Start now with us"
+    },
+    "slide2": {
+      "title": "High Quality Courses",
+      "subtitle": "Learn from top experts with modern methods"
+    },
+    "slide3": {
+      "title": "Vibrant Learning Community",
+      "subtitle": "Join thousands of students nationwide"
+    },
+    "slide4": {
+      "title": "Advertising & Marketing",
+      "subtitle": "Explore professional marketing and advertising courses"
+    },
+    "slide5": {
+      "title": "Animation & Design",
+      "subtitle": "Learn professional animation and graphic design"
+    },
+    "exploreCourses": "Explore Courses",
+    "readBlog": "Read Blog"
+  },
+  "home": {
+    "featuredCourses": "Featured Courses",
+    "viewAllCourses": "View All Courses",
+    "noCoursesFound": "No courses found",
+    "noCoursesFoundDesc": "Please try again later or contact us",
+    "sidebar": {
+      "latestPosts": "Latest Posts",
+      "popularPosts": "Popular Posts",
+      "categories": "Categories",
+      "tags": "Tags",
+      "newsletter": "Newsletter",
+      "newsletterDesc": "Subscribe to our newsletter for updates",
+      "subscribe": "Subscribe",
+      "emailPlaceholder": "Enter your email"
+    }
   }
 } 
