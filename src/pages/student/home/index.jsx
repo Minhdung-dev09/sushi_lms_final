@@ -270,10 +270,6 @@ function StudentHomePage() {
                           <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
                             {courseItem?.category || "Lập trình"}
                           </span>
-                          <div className="flex items-center">
-                            <StarFilled className="text-yellow-400 text-xs mr-1" />
-                            <span className="text-xs text-gray-600">4.8 (120)</span>
-                          </div>
                         </div>
                         
                         <h3 className="font-bold text-sm mb-1 text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300">
@@ -295,11 +291,7 @@ function StudentHomePage() {
                           </div>
                           
                           <div className="flex items-center space-x-1 text-xs text-gray-500">
-                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                              <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                            </svg>
-                            <span>12.5k</span>
+                            <span>PR</span>
                           </div>
                         </div>
                       </div>
@@ -324,9 +316,6 @@ function StudentHomePage() {
                    onClick={() => navigate("/courses")}
                  >
                    {t("home.viewAllCourses")}
-                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                   </svg>
                  </Button>
               </div>
             </div>
