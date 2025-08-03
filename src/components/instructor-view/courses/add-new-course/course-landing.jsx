@@ -9,10 +9,10 @@ function CourseLanding() {
     useContext(InstructorContext);
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Trang giới thiệu khóa học</CardTitle>
+      <CardHeader className="p-4 sm:p-6">
+        <CardTitle className="text-lg sm:text-xl">Trang giới thiệu khóa học</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-4 sm:p-6">
         <FormControls
           formControls={courseLandingPageFormControls}
           formData={courseLandingFormData}

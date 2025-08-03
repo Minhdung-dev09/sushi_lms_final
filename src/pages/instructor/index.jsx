@@ -181,10 +181,10 @@ function InstructorDashboardpage() {
     <>
       {/* Mobile Header */}
       <header className="md:hidden flex items-center justify-between p-4 border-b bg-white shadow-sm">
-        <div className="flex items-center space-x-4">
-          <GraduationCap className="h-8 w-8" />
-          <span className="font-extrabold text-xl">Sushi Learning</span>
-        </div>
+      <div className="text-2xl flex items-center gap-2 font-bold mb-2 text-yellow-400">
+            <img src="/logo.svg" alt="Sushi Learning" className="h-8 w-8" />
+            <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Sushi Learning</span>
+          </div>
         <button
           onClick={toggleMobileMenu}
           className="flex items-center justify-center w-10 h-10 rounded-full border hover:bg-gray-100 focus:outline-none"
@@ -197,7 +197,10 @@ function InstructorDashboardpage() {
         {/* Desktop Sidebar */}
         <aside className="w-64 bg-white shadow-md hidden md:block">
           <div className="p-4">
-            <h2 className="text-2xl font-bold mb-4">Sushi Learning</h2>
+          <div className="text-2xl flex items-center gap-2 font-bold mb-2 text-yellow-400">
+            <img src="/logo.svg" alt="Sushi Learning" className="h-8 w-8" />
+            <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Sushi Learning</span>
+          </div>
             <nav>
               {menuItems.map((menuItem) => (
                 <Button

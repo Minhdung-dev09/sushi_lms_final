@@ -144,27 +144,26 @@ function AddNewCoursePage() {
   console.log(params, currentEditedCourseId, "params");
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex justify-between">
-        <h1 className="text-3xl font-extrabold mb-5">{t('instructor.createNewCourseTitle')}</h1>
+    <div className="container mx-auto p-2 sm:p-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         <Button
           disabled={!validateFormData()}
-          className="text-sm tracking-wider font-bold px-8"
+          className="text-sm tracking-wider font-bold px-4 sm:px-8 w-full sm:w-auto"
           onClick={handleCreateCourse}
         >
           HOÀN TẤT
         </Button>
       </div>
       <Card>
-        <CardContent>
-          <div className="container mx-auto p-4">
+        <CardContent className="p-2 sm:p-6">
+          <div className="container mx-auto">
             <Tabs defaultValue="curriculum" className="space-y-4">
-              <TabsList>
-                <TabsTrigger value="curriculum">{t('course.curriculum')}</TabsTrigger>
-                <TabsTrigger value="course-landing-page">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="curriculum" className="text-xs sm:text-sm">{t('course.curriculum')}</TabsTrigger>
+                <TabsTrigger value="course-landing-page" className="text-xs sm:text-sm">
                   {t('course.landingPage')}
                 </TabsTrigger>
-                <TabsTrigger value="settings">{t('common.settings')}</TabsTrigger>
+                <TabsTrigger value="settings" className="text-xs sm:text-sm">{t('common.settings')}</TabsTrigger>
               </TabsList>
               <TabsContent value="curriculum">
                 <CourseCurriculum />
