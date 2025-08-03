@@ -57,8 +57,8 @@ function AuthPage() {
   console.log(signInFormData);
 
   return (
-    <div className="relative flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-14 flex items-center justify-between border-b bg-white shadow-sm z-20">
+    <div className="relative flex flex-col min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
+      <header className="px-4 lg:px-6 h-14 flex items-center justify-between border-b bg-white/90 backdrop-blur-sm shadow-sm z-20">
         <Link to={"/"} className="flex items-center justify-center">
           <div className="text-2xl flex items-center gap-2 font-bold mb-2 text-yellow-400">
             <img src="/logo.svg" alt="Sushi Learning" className="h-8 w-8" />
@@ -80,7 +80,7 @@ function AuthPage() {
               className="w-full"
             >
               <TabsContent value="signin">
-                <Card className="p-8 space-y-6 bg-white shadow-xl border-0 rounded-2xl">
+                <Card className="p-8 space-y-6 bg-white/95 backdrop-blur-sm shadow-xl border-0 rounded-2xl">
                   <CardHeader className="text-center pb-4">
                     <CardTitle className="text-2xl font-bold text-gray-900">
                       {t('auth.loginTitle')}
@@ -112,7 +112,7 @@ function AuthPage() {
                 </Card>
               </TabsContent>
               <TabsContent value="signup">
-                <Card className="p-8 space-y-6 bg-white shadow-xl border-0 rounded-2xl">
+                <Card className="p-8 space-y-6 bg-white/95 backdrop-blur-sm shadow-xl border-0 rounded-2xl">
                   <CardHeader className="text-center pb-4">
                     <CardTitle className="text-2xl font-bold text-gray-900">
                       {t('auth.registerTitle')}
@@ -151,7 +151,7 @@ function AuthPage() {
         <div className="lg:w-1/2 relative">
           <div className="absolute inset-0 m-8 rounded-3xl overflow-hidden shadow-2xl">
             <img
-              src="/banners-img.jpg"
+              src="/bg2.jpg"
               alt="Learning background"
               className="w-full h-full object-cover"
             />
