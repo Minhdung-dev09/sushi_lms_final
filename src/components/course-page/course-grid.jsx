@@ -51,7 +51,7 @@ function CourseGrid({ courses, loadingState, onCourseClick }) {
               alt={courseItem?.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               onError={(e) => {
-                e.target.src = '/bg2.jpg'; // Fallback image
+                e.target.src = '/bg2.jpeg'; // Fallback image
                 e.target.onerror = null;
               }}
             />
