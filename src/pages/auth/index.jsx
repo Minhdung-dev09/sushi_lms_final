@@ -151,7 +151,7 @@ function AuthPage() {
         <div className="lg:w-1/2 relative">
           <div className="absolute inset-0 m-8 rounded-3xl overflow-hidden shadow-2xl">
             <img
-              src="/bg2.jpg"
+              src="/bg2.jpeg"
               alt="Learning background"
               className="w-full h-full object-cover"
             />

@@ -137,8 +137,8 @@ function StudentHomePage() {
     {
       title: t("banner.slide3.title"),
       subtitle: t("banner.slide3.subtitle"),
-      backgroundImage: "/bg2.jpg",
-      overlayImage: "/bg2.jpg"
+      backgroundImage: "/bg2.jpeg",
+      overlayImage: "/bg2.jpeg"
     },
     {
       title: t("banner.slide4.title"),
