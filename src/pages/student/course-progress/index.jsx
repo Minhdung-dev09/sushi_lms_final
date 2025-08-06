@@ -19,7 +19,7 @@ import {
   markLectureAsViewedService,
   resetCourseProgressService,
 } from "@/services";
-import { BookOpen, Check, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { BookOpen, Check, ChevronLeft, ChevronRight, Play, Link, ExternalLink } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { useNavigate, useParams } from "react-router-dom";
@@ -128,6 +128,16 @@ function StudentViewCourseProgressPage() {
     }
   }
 
+  function handleLectureClick(lecture) {
+    setCurrentLecture(lecture);
+  }
+
+  function handleOpenLink() {
+    if (currentLecture?.linkUrl) {
+      window.open(currentLecture.linkUrl, '_blank');
+    }
+  }
+
   useEffect(() => {
     fetchCurrentCourseProgress();
   }, [id]);
@@ -141,6 +151,9 @@ function StudentViewCourseProgressPage() {
   }, [showConfetti]);
 
   console.log(currentLecture, "currentLecture");
+
+  // Check if current lecture is a link type
+  const isLinkLecture = currentLecture?.type === "link";
 
   return (
     <div className="flex flex-col h-screen bg-white text-black">
@@ -174,17 +187,49 @@ function StudentViewCourseProgressPage() {
             isSideBarOpen ? "mr-[400px]" : ""
           } transition-all duration-300`}
         >
-          <VideoPlayer
-            width="100%"
-            height="500px"
-            url={currentLecture?.videoUrl}
-            onProgressUpdate={setCurrentLecture}
-            progressData={currentLecture}
-          />
+          {isLinkLecture ? (
+            // Link Content Display
+            <div className="h-[500px] bg-gray-100 flex items-center justify-center">
+              <div className="text-center p-8">
+                <Link className="h-16 w-16 text-blue-500 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold mb-4 text-black">
+                  {currentLecture?.title}
+                </h2>
+                <p className="text-gray-600 mb-6 max-w-md">
+                  Đây là bài giảng dạng link. Vui lòng click vào nút bên dưới để truy cập nội dung khóa học.
+                </p>
+                <Button 
+                  onClick={handleOpenLink}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
+                >
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Truy cập khóa học
+                </Button>
+                <p className="text-sm text-gray-500 mt-4">
+                  Link sẽ mở trong tab mới
+                </p>
+              </div>
+            </div>
+          ) : (
+            // Video Content Display
+            <VideoPlayer
+              width="100%"
+              height="500px"
+              url={currentLecture?.videoUrl}
+              onProgressUpdate={setCurrentLecture}
+              progressData={currentLecture}
+            />
+          )}
           <div className="p-6 bg-white">
             <h2 className="text-2xl font-bold mb-2 text-black">
               {currentLecture?.title}
             </h2>
+            {isLinkLecture && (
+              <p className="text-gray-600 mb-4">
+                <Link className="h-4 w-4 inline mr-2" />
+                Bài giảng dạng link - Click nút "Truy cập khóa học" ở trên để xem nội dung
+              </p>
+            )}
           </div>
         </div>
         <div
@@ -213,17 +258,27 @@ function StudentViewCourseProgressPage() {
                   {studentCurrentCourseProgress?.courseDetails?.curriculum.map(
                     (item) => (
                       <div
-                        className="flex items-center space-x-2 text-sm text-black font-bold cursor-pointer"
+                        className="flex items-center space-x-2 text-sm text-black font-bold cursor-pointer hover:bg-gray-100 p-2 rounded"
                         key={item._id}
+                        onClick={() => handleLectureClick(item)}
                       >
                         {studentCurrentCourseProgress?.progress?.find(
                           (progressItem) => progressItem.lectureId === item._id
                         )?.viewed ? (
                           <Check className="h-4 w-4 text-green-500" />
                         ) : (
-                          <Play className="h-4 w-4" />
+                          item.type === "link" ? (
+                            <Link className="h-4 w-4 text-blue-500" />
+                          ) : (
+                            <Play className="h-4 w-4" />
+                          )
                         )}
                         <span>{item?.title}</span>
+                        {item.type === "link" && (
+                          <span className="text-xs text-blue-500 bg-blue-100 px-2 py-1 rounded">
+                            Link
+                          </span>
+                        )}
                       </div>
                     )
                   )}

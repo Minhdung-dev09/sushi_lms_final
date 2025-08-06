@@ -16,10 +16,12 @@ import {
   checkCoursePurchaseInfoService,
   createPaymentService,
   fetchStudentViewCourseDetailsService,
+  enrollFreeCourseService,
 } from "@/services";
-import { CheckCircle, Globe, Lock, PlayCircle } from "lucide-react";
+import { CheckCircle, Globe, Lock, PlayCircle, Loader2, Link } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { toast } from "@/hooks/use-toast";
 
 function StudentViewCourseDetailsPage() {
   const {
@@ -37,6 +39,7 @@ function StudentViewCourseDetailsPage() {
     useState(null);
   const [showFreePreviewDialog, setShowFreePreviewDialog] = useState(false);
   const [approvalUrl, setApprovalUrl] = useState("");
+  const [isEnrolling, setIsEnrolling] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
@@ -71,7 +74,80 @@ function StudentViewCourseDetailsPage() {
 
   function handleSetFreePreview(getCurrentVideoInfo) {
     console.log(getCurrentVideoInfo);
-    setDisplayCurrentVideoFreePreview(getCurrentVideoInfo?.videoUrl);
+    if (getCurrentVideoInfo?.type === "link") {
+      // For link type, open in new tab
+      window.open(getCurrentVideoInfo?.linkUrl, '_blank');
+    } else {
+      // For video type, show in preview dialog
+      setDisplayCurrentVideoFreePreview(getCurrentVideoInfo?.videoUrl);
+    }
+  }
+
+  // Check if course is free (pricing === 0)
+  const isFreeCourse = studentViewCourseDetails?.pricing === 0;
+
+  async function handleEnrollFreeCourse() {
+    if (!auth?.user) {
+      toast({
+        title: "Lỗi!",
+        description: "Vui lòng đăng nhập để tham gia khóa học.",
+        status: "error",
+      });
+      return;
+    }
+
+    if (!studentViewCourseDetails) {
+      toast({
+        title: "Lỗi!",
+        description: "Không tìm thấy thông tin khóa học.",
+        status: "error",
+      });
+      return;
+    }
+
+    setIsEnrolling(true);
+    try {
+      const enrollmentPayload = {
+        userId: auth?.user?._id,
+        userName: auth?.user?.userName,
+        userEmail: auth?.user?.userEmail,
+        instructorId: studentViewCourseDetails?.instructorId,
+        instructorName: studentViewCourseDetails?.instructorName,
+        courseImage: studentViewCourseDetails?.image,
+        courseTitle: studentViewCourseDetails?.title,
+        courseId: studentViewCourseDetails?._id,
+      };
+
+      const response = await enrollFreeCourseService(enrollmentPayload);
+
+      if (response.success) {
+        toast({
+          title: "Thành công!",
+          description: "Bạn đã được tham gia khóa học miễn phí.",
+          status: "success",
+        });
+        
+        // Redirect to course progress page
+        setTimeout(() => {
+          navigate(`/course-progress/${studentViewCourseDetails?._id}`);
+        }, 1500);
+      } else {
+        toast({
+          title: "Lỗi!",
+          description: response?.message || "Có lỗi xảy ra khi tham gia khóa học.",
+          status: "error",
+        });
+      }
+    } catch (error) {
+      console.error("Enrollment error:", error);
+      toast({
+        title: "Lỗi!",
+        description: "Có lỗi xảy ra khi tham gia khóa học. Vui lòng thử lại.",
+        status: "error",
+      });
+    } finally {
+      setIsEnrolling(false);
+    }
   }
 
   async function handleCreatePayment() {
@@ -131,7 +207,7 @@ function StudentViewCourseDetailsPage() {
   const getIndexOfFreePreviewUrl =
     studentViewCourseDetails !== null
       ? studentViewCourseDetails?.curriculum?.findIndex(
-          (item) => item.freePreview
+          (item) => item.freePreview && item.type === "video"
         )
       : -1;
 
@@ -155,6 +231,11 @@ function StudentViewCourseDetailsPage() {
               ? "Student"
               : "Students"}
           </span>
+          {isFreeCourse && (
+            <span className="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded">
+              Miễn phí
+            </span>
+          )}
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-8 mt-8">
@@ -203,11 +284,20 @@ function StudentViewCourseDetailsPage() {
                     }
                   >
                     {curriculumItem?.freePreview ? (
-                      <PlayCircle className="mr-2 h-4 w-4" />
+                      curriculumItem?.type === "link" ? (
+                        <Link className="mr-2 h-4 w-4 text-blue-500" />
+                      ) : (
+                        <PlayCircle className="mr-2 h-4 w-4" />
+                      )
                     ) : (
                       <Lock className="mr-2 h-4 w-4" />
                     )}
                     <span>{curriculumItem?.title}</span>
+                    {curriculumItem?.type === "link" && (
+                      <span className="text-xs text-blue-500 bg-blue-100 px-2 py-1 rounded ml-2">
+                        Link
+                      </span>
+                    )}
                   </li>
                 )
               )}
@@ -231,13 +321,37 @@ function StudentViewCourseDetailsPage() {
                 />
               </div>
               <div className="mb-4">
+                {isFreeCourse && (
+                  <div className="mb-2">
+                    <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                      Khóa học miễn phí
+                    </span>
+                  </div>
+                )}
                 <span className="text-3xl font-bold">
-                  {studentViewCourseDetails?.pricing * 23000} VNĐ
+                  {isFreeCourse ? "Miễn phí" : `${studentViewCourseDetails?.pricing * 23000} VNĐ`}
                 </span>
               </div>
-              <Button onClick={handleCreatePayment} className="w-full">
-                Mua ngay
+              <Button 
+                onClick={isFreeCourse ? handleEnrollFreeCourse : handleCreatePayment} 
+                className="w-full"
+                disabled={isEnrolling}
+                variant={isFreeCourse ? "default" : "default"}
+              >
+                {isEnrolling ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Đang xử lý...
+                  </>
+                ) : (
+                  isFreeCourse ? "Tham gia ngay" : "Mua ngay"
+                )}
               </Button>
+              {isFreeCourse && (
+                <p className="text-sm text-gray-600 mt-2 text-center">
+                  Khóa học này hoàn toàn miễn phí, bạn có thể tham gia ngay mà không cần thanh toán
+                </p>
+              )}
             </CardContent>
           </Card>
         </aside>
@@ -253,24 +367,36 @@ function StudentViewCourseDetailsPage() {
           <DialogHeader>
             <DialogTitle>Xem trước khóa học</DialogTitle>
           </DialogHeader>
-          <div className="aspect-video rounded-lg flex items-center justify-center">
-            <VideoPlayer
-              url={displayCurrentVideoFreePreview}
-              width="450px"
-              height="200px"
-            />
-          </div>
+          {displayCurrentVideoFreePreview && (
+            <div className="aspect-video rounded-lg flex items-center justify-center">
+              <VideoPlayer
+                url={displayCurrentVideoFreePreview}
+                width="450px"
+                height="200px"
+              />
+            </div>
+          )}
           <div className="flex flex-col gap-2">
             {studentViewCourseDetails?.curriculum
               ?.filter((item) => item.freePreview)
               .map((filteredItem, idx) => (
-                <p
+                <div
                   key={filteredItem.public_id || idx}
                   onClick={() => handleSetFreePreview(filteredItem)}
-                  className="cursor-pointer text-[16px] font-medium"
+                  className="cursor-pointer text-[16px] font-medium flex items-center"
                 >
-                  {filteredItem?.title}
-                </p>
+                  {filteredItem?.type === "link" ? (
+                    <Link className="h-4 w-4 mr-2 text-blue-500" />
+                  ) : (
+                    <PlayCircle className="h-4 w-4 mr-2" />
+                  )}
+                  <span>{filteredItem?.title}</span>
+                  {filteredItem?.type === "link" && (
+                    <span className="text-xs text-blue-500 bg-blue-100 px-2 py-1 rounded ml-2">
+                      Link
+                    </span>
+                  )}
+                </div>
               ))}
           </div>
           <DialogFooter className="sm:justify-start">

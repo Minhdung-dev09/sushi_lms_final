@@ -167,6 +167,8 @@ export const courseCurriculumInitialFormData = [
   {
     title: "",
     videoUrl: "",
+    linkUrl: "",
+    type: "video",
     freePreview: false,
     public_id: "",
   },

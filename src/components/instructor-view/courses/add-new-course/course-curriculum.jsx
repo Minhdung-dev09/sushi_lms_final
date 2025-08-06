@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import VideoPlayer from "@/components/video-player";
 import { courseCurriculumInitialFormData } from "@/config";
 import { InstructorContext } from "@/context/instructor-context";
@@ -12,7 +13,7 @@ import {
   mediaDeleteService,
   mediaUploadService,
 } from "@/services";
-import { Upload } from "lucide-react";
+import { Upload, Link, Video } from "lucide-react";
 import { useContext, useRef } from "react";
 import { toast } from "@/hooks/use-toast";
 
@@ -29,11 +30,18 @@ function CourseCurriculum() {
   const bulkUploadInputRef = useRef(null);
 
   function handleNewLecture() {
+    const newLecture = {
+      title: "",
+      videoUrl: "",
+      linkUrl: "",
+      type: "video",
+      freePreview: false,
+      public_id: "",
+    };
+    
     setCourseCurriculumFormData([
       ...courseCurriculumFormData,
-      {
-        ...courseCurriculumInitialFormData[0],
-      },
+      newLecture,
     ]);
   }
 
@@ -42,6 +50,32 @@ function CourseCurriculum() {
     cpyCourseCurriculumFormData[currentIndex] = {
       ...cpyCourseCurriculumFormData[currentIndex],
       title: event.target.value,
+    };
+
+    setCourseCurriculumFormData(cpyCourseCurriculumFormData);
+  }
+
+  function handleContentTypeChange(value, currentIndex) {
+    let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
+    const currentItem = cpyCourseCurriculumFormData[currentIndex];
+    
+    cpyCourseCurriculumFormData[currentIndex] = {
+      ...currentItem,
+      type: value,
+      // Clear the other type's data when switching
+      videoUrl: value === "video" ? currentItem.videoUrl : "",
+      public_id: value === "video" ? currentItem.public_id : "",
+      linkUrl: value === "link" ? currentItem.linkUrl : "",
+    };
+
+    setCourseCurriculumFormData(cpyCourseCurriculumFormData);
+  }
+
+  function handleLinkUrlChange(event, currentIndex) {
+    let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
+    cpyCourseCurriculumFormData[currentIndex] = {
+      ...cpyCourseCurriculumFormData[currentIndex],
+      linkUrl: event.target.value,
     };
 
     setCourseCurriculumFormData(cpyCourseCurriculumFormData);
@@ -130,12 +164,17 @@ function CourseCurriculum() {
 
   function isCourseCurriculumFormDataValid() {
     return courseCurriculumFormData.every((item) => {
-      return (
-        item &&
-        typeof item === "object" &&
-        item.title.trim() !== "" &&
-        item.videoUrl.trim() !== ""
-      );
+      if (!item || typeof item !== "object" || item.title.trim() === "") {
+        return false;
+      }
+      
+      if (item.type === "video") {
+        return item.videoUrl.trim() !== "";
+      } else if (item.type === "link") {
+        return item.linkUrl.trim() !== "";
+      }
+      
+      return false;
     });
   }
 
@@ -183,6 +222,8 @@ function CourseCurriculum() {
               cpyCourseCurriculumFormdata.length + (index + 1)
             }`,
             freePreview: false,
+            type: "video",
+            linkUrl: "",
           })),
         ];
         setCourseCurriculumFormData(cpyCourseCurriculumFormdata);
@@ -199,15 +240,23 @@ function CourseCurriculum() {
       cpyCourseCurriculumFormData[currentIndex] &&
       cpyCourseCurriculumFormData[currentIndex].public_id;
 
-    const response = await mediaDeleteService(getCurrentSelectedVideoPublicId);
-
-    if (response?.success) {
-      cpyCourseCurriculumFormData = cpyCourseCurriculumFormData.filter(
-        (_, index) => index !== currentIndex
-      );
-
-      setCourseCurriculumFormData(cpyCourseCurriculumFormData);
+    if (getCurrentSelectedVideoPublicId) {
+      const response = await mediaDeleteService(getCurrentSelectedVideoPublicId);
+      if (!response?.success) {
+        toast({
+          title: "Lỗi!",
+          description: "Không thể xóa video từ server.",
+          status: "error",
+        });
+        return;
+      }
     }
+
+    cpyCourseCurriculumFormData = cpyCourseCurriculumFormData.filter(
+      (_, index) => index !== currentIndex
+    );
+
+    setCourseCurriculumFormData(cpyCourseCurriculumFormData);
   }
 
   return (
@@ -279,37 +328,97 @@ function CourseCurriculum() {
                   </Label>
                 </div>
               </div>
+              
+              {/* Content Type Selector */}
+              <div className="mt-4">
+                <Label className="text-sm font-medium mb-2 block">Loại nội dung:</Label>
+                <Select
+                  value={courseCurriculumFormData[index]?.type || "video"}
+                  onValueChange={(value) => handleContentTypeChange(value, index)}
+                >
+                  <SelectTrigger className="w-full sm:w-48">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="video">
+                      <div className="flex items-center">
+                        <Video className="w-4 h-4 mr-2" />
+                        Video
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="link">
+                      <div className="flex items-center">
+                        <Link className="w-4 h-4 mr-2" />
+                        Link
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
               <div className="mt-4 sm:mt-6">
-                {courseCurriculumFormData[index]?.videoUrl ? (
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <div className="w-full sm:w-auto">
-                      <VideoPlayer
-                        url={courseCurriculumFormData[index]?.videoUrl}
-                        width="100%"
-                        height="200px"
-                      />
+                {courseCurriculumFormData[index]?.type === "video" ? (
+                  // Video Content
+                  courseCurriculumFormData[index]?.videoUrl ? (
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <div className="w-full sm:w-auto">
+                        <VideoPlayer
+                          url={courseCurriculumFormData[index]?.videoUrl}
+                          width="100%"
+                          height="200px"
+                        />
+                      </div>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <Button onClick={() => handleReplaceVideo(index)} className="w-full sm:w-auto">
+                          Thay video khác
+                        </Button>
+                        <Button
+                          onClick={() => handleDeleteLecture(index)}
+                          className="bg-red-900 w-full sm:w-auto"
+                        >
+                          Xóa bài giảng
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-2">
-                      <Button onClick={() => handleReplaceVideo(index)} className="w-full sm:w-auto">
-                        Thay video khác
-                      </Button>
-                      <Button
-                        onClick={() => handleDeleteLecture(index)}
-                        className="bg-red-900 w-full sm:w-auto"
-                      >
-                        Xóa bài giảng
-                      </Button>
-                    </div>
-                  </div>
+                  ) : (
+                    <Input
+                      type="file"
+                      accept="video/*"
+                      onChange={(event) =>
+                        handleSingleLectureUpload(event, index)
+                      }
+                      className="mb-4"
+                    />
+                  )
                 ) : (
-                  <Input
-                    type="file"
-                    accept="video/*"
-                    onChange={(event) =>
-                      handleSingleLectureUpload(event, index)
-                    }
-                    className="mb-4"
-                  />
+                  // Link Content
+                  <div className="space-y-3">
+                    <Input
+                      type="url"
+                      placeholder="Nhập link khóa học (VD: https://youtube.com/watch?v=...)"
+                      value={courseCurriculumFormData[index]?.linkUrl || ""}
+                      onChange={(event) => handleLinkUrlChange(event, index)}
+                      className="w-full"
+                    />
+                    {courseCurriculumFormData[index]?.linkUrl && (
+                      <div className="flex items-center space-x-2">
+                        <Button
+                          onClick={() => window.open(courseCurriculumFormData[index]?.linkUrl, '_blank')}
+                          variant="outline"
+                          className="w-full sm:w-auto"
+                        >
+                          <Link className="w-4 h-4 mr-2" />
+                          Kiểm tra link
+                        </Button>
+                        <Button
+                          onClick={() => handleDeleteLecture(index)}
+                          className="bg-red-900 w-full sm:w-auto"
+                        >
+                          Xóa bài giảng
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
