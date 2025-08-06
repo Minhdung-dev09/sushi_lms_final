@@ -46,20 +46,42 @@ function AddNewCoursePage() {
   }
 
   function validateFormData() {
+    // Validate landing page form data
     for (const key in courseLandingFormData) {
       if (isEmpty(courseLandingFormData[key])) {
+        console.log(`Landing page validation failed for: ${key}`);
         return false;
       }
+    }
+
+    // Validate curriculum form data
+    if (courseCurriculumFormData.length === 0) {
+      console.log("Curriculum validation failed: No curriculum items");
+      return false;
     }
 
     let hasFreePreview = false;
 
     for (const item of courseCurriculumFormData) {
-      if (
-        isEmpty(item.title) ||
-        isEmpty(item.videoUrl) ||
-        isEmpty(item.public_id)
-      ) {
+      // Check title is not empty
+      if (isEmpty(item.title)) {
+        console.log("Curriculum validation failed: Empty title");
+        return false;
+      }
+
+      // Check content based on type
+      if (item.type === "video") {
+        if (isEmpty(item.videoUrl) || isEmpty(item.public_id)) {
+          console.log("Curriculum validation failed: Video content missing");
+          return false;
+        }
+      } else if (item.type === "link") {
+        if (isEmpty(item.linkUrl)) {
+          console.log("Curriculum validation failed: Link URL missing");
+          return false;
+        }
+      } else {
+        console.log("Curriculum validation failed: Invalid content type");
         return false;
       }
 
@@ -68,7 +90,12 @@ function AddNewCoursePage() {
       }
     }
 
-    return hasFreePreview;
+    if (!hasFreePreview) {
+      console.log("Curriculum validation failed: No free preview found");
+      return false;
+    }
+
+    return true;
   }
 
   async function handleCreateCourse() {
@@ -141,7 +168,41 @@ function AddNewCoursePage() {
     if (params?.courseId) setCurrentEditedCourseId(params?.courseId);
   }, [params?.courseId]);
 
+  // Ensure there's at least one curriculum item when creating new course
+  useEffect(() => {
+    if (currentEditedCourseId === null && courseCurriculumFormData.length === 0) {
+      const initialLecture = {
+        title: "",
+        videoUrl: "",
+        linkUrl: "",
+        type: "video",
+        freePreview: false,
+        public_id: "",
+      };
+      setCourseCurriculumFormData([initialLecture]);
+    }
+  }, [currentEditedCourseId, courseCurriculumFormData.length]);
+
   console.log(params, currentEditedCourseId, "params");
+
+  // Debug logging
+  console.log("Course Landing Form Data:", courseLandingFormData);
+  console.log("Course Curriculum Form Data:", courseCurriculumFormData);
+  console.log("Validation Result:", validateFormData());
+  
+  // Additional debug info
+  if (courseCurriculumFormData.length > 0) {
+    courseCurriculumFormData.forEach((item, index) => {
+      console.log(`Curriculum Item ${index}:`, {
+        title: item.title,
+        type: item.type,
+        videoUrl: item.videoUrl,
+        linkUrl: item.linkUrl,
+        public_id: item.public_id,
+        freePreview: item.freePreview
+      });
+    });
+  }
 
   return (
     <div className="container mx-auto p-2 sm:p-4">

@@ -244,3 +244,9 @@ export async function searchBlogsService(searchTerm) {
   );
   return data;
 }
+
+// Free course enrollment service
+export async function enrollFreeCourseService(formData) {
+  const { data } = await axiosInstance.post(`/student/course/enroll-free`, formData);
+  return data;
+}
