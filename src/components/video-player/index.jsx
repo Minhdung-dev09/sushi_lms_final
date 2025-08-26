@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import ReactPlayer from "react-player";
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
 import { Slider } from "../ui/slider";
 import { Button } from "../ui/button";
 import {
@@ -25,11 +26,14 @@ function VideoPlayer({
   const [volume, setVolume] = useState(0.5);
   const [muted, setMuted] = useState(false);
   const [played, setPlayed] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [seeking, setSeeking] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
   const playerRef = useRef(null);
+  const videoNodeRef = useRef(null);
   const playerContainerRef = useRef(null);
   const controlsTimeoutRef = useRef(null);
 
@@ -44,11 +48,16 @@ function VideoPlayer({
   }
 
   function handleRewind() {
-    playerRef?.current?.seekTo(playerRef?.current?.getCurrentTime() - 5);
+    if (!playerRef.current) return;
+    const t = playerRef.current.currentTime?.() ?? 0;
+    playerRef.current.currentTime(Math.max(0, t - 5));
   }
 
   function handleForward() {
-    playerRef?.current?.seekTo(playerRef?.current?.getCurrentTime() + 5);
+    if (!playerRef.current) return;
+    const t = playerRef.current.currentTime?.() ?? 0;
+    const d = playerRef.current.duration?.() ?? 0;
+    playerRef.current.currentTime(Math.min(d, t + 5));
   }
 
   function handleToggleMute() {
@@ -62,7 +71,9 @@ function VideoPlayer({
 
   function handleSeekMouseUp() {
     setSeeking(false);
-    playerRef.current?.seekTo(played);
+    if (!playerRef.current) return;
+    const d = playerRef.current.duration?.() ?? duration;
+    playerRef.current.currentTime((played || 0) * d);
   }
 
   function handleVolumeChange(newValue) {
@@ -105,6 +116,70 @@ function VideoPlayer({
   }
 
   useEffect(() => {
+    // Init video.js
+    if (!videoNodeRef.current) return;
+    const player = videojs(videoNodeRef.current, {
+      controls: false,
+      autoplay: false,
+      preload: "auto",
+      sources: [
+        {
+          src: url,
+        },
+      ],
+    });
+
+    playerRef.current = player;
+
+    const onLoadedMeta = () => {
+      const d = player.duration?.() ?? 0;
+      setDuration(d);
+    };
+
+    const onTimeUpdate = () => {
+      if (seeking) return;
+      const t = player.currentTime?.() ?? 0;
+      const d = player.duration?.() ?? 0;
+      setCurrentTime(t);
+      setDuration(d);
+      if (d > 0) setPlayed(t / d);
+    };
+
+    const onEnded = () => {
+      setPlaying(false);
+      setPlayed(1);
+    };
+
+    player.on("loadedmetadata", onLoadedMeta);
+    player.on("timeupdate", onTimeUpdate);
+    player.on("ended", onEnded);
+
+    return () => {
+      try {
+        player.off("loadedmetadata", onLoadedMeta);
+        player.off("timeupdate", onTimeUpdate);
+        player.off("ended", onEnded);
+        player.dispose?.();
+      } catch (e) {
+        // noop
+      }
+      playerRef.current = null;
+    };
+  }, [url, seeking]);
+
+  useEffect(() => {
+    if (!playerRef.current) return;
+    playerRef.current.volume?.(muted ? 0 : volume);
+    playerRef.current.muted?.(muted);
+  }, [volume, muted]);
+
+  useEffect(() => {
+    if (!playerRef.current) return;
+    if (playing) playerRef.current.play?.();
+    else playerRef.current.pause?.();
+  }, [playing]);
+
+  useEffect(() => {
     const handleFullScreenChange = () => {
       setIsFullScreen(document.fullscreenElement);
     };
@@ -118,7 +193,7 @@ function VideoPlayer({
 
   useEffect(() => {
     if (played === 1) {
-      onProgressUpdate({
+      onProgressUpdate?.({
         ...progressData,
         progressValue: played,
       });
@@ -135,16 +210,9 @@ function VideoPlayer({
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setShowControls(false)}
     >
-      <ReactPlayer
-        ref={playerRef}
-        className="absolute top-0 left-0"
-        width="100%"
-        height="100%"
-        url={url}
-        playing={playing}
-        volume={volume}
-        muted={muted}
-        onProgress={handleProgress}
+      <video
+        ref={videoNodeRef}
+        className="video-js vjs-default-skin absolute top-0 left-0 w-full h-full"
       />
       {showControls && (
         <div
@@ -212,8 +280,7 @@ function VideoPlayer({
             </div>
             <div className="flex items-center space-x-2">
               <div className="text-white">
-                {formatTime(played * (playerRef?.current?.getDuration() || 0))}/{" "}
-                {formatTime(playerRef?.current?.getDuration() || 0)}
+                {formatTime(currentTime || 0)}/ {formatTime(duration || 0)}
               </div>
               <Button
                 className="text-white bg-transparent hover:text-white hover:bg-gray-700"
